@@ -25,7 +25,8 @@ export class TabletRestComponent implements OnInit {
     pinAttempt: number = 0;
     storePinDisplay: boolean = false;
     pusher: any
-    channel: any
+    channel: any;
+    customtime: any;
     data: any = [];
     pause: boolean = false;
     id: any;
@@ -37,6 +38,7 @@ export class TabletRestComponent implements OnInit {
     orderDetail: any = [];
     customnFlag: boolean = false;
     public loading = false;
+
     //order items
     time = [];
     qty = [];
@@ -135,6 +137,8 @@ export class TabletRestComponent implements OnInit {
         loop: true,
     });
     constructor(private service: AppService, private ngZone: NgZone) {
+        //var link = document.getElementById('mylink');
+
 
         //const {Howl, Howler} = require('howler');
         this.sound.stop();
@@ -186,7 +190,9 @@ export class TabletRestComponent implements OnInit {
         });
 
     }
-
+    test() {
+        console.log("test");
+    }
 
     resetRefundVariables() {
         this.reason = "";
@@ -510,7 +516,7 @@ export class TabletRestComponent implements OnInit {
 
         $('#modalPush').modal('show');
         data.color = "gold";
-        data.timer = 5;
+        data.timer = 120;
         data.isOpened = false;
         data.ETA = "TBD";
         var tnum = data.restaurant.tNum;
@@ -609,6 +615,7 @@ export class TabletRestComponent implements OnInit {
 
 
 
+
     }
     formatPhoneNumber(phoneNumberString) {
         var cleaned = ('' + phoneNumberString).replace(/\D/g, '')
@@ -697,7 +704,7 @@ export class TabletRestComponent implements OnInit {
                                     data[k].orderStatus.ETA = 'REFUND';
                                 }
                                 else {
-                                    this.data[k].timer = 5;
+                                    this.data[k].timer = 120;
                                     this.data[k].color = 'gold';
                                     this.startTimer(this.data[k]);
                                 }
@@ -709,11 +716,10 @@ export class TabletRestComponent implements OnInit {
                             }
 
                         }
-
+                        //this.pushStaticJson();
                         console.log(this.data);
                         console.log(this.restStatus);
-                        // this.redSoundAlert();
-                        //this.doWork();
+
 
                     },
                     error => {
@@ -873,8 +879,14 @@ export class TabletRestComponent implements OnInit {
     }
 
     acceptOrder($event) {
-        var orderid = $event.id;
-        var eta = $event.eta;
+        if (this.customtime != undefined || this.customtime != null) {
+            var eta = this.customtime;
+            var orderid = $event.id;
+        }
+        else {
+            var orderid = $event.id;
+            var eta = $event.eta;
+        }
         console.log(orderid)
         console.log(eta)
         if (eta == 'TBD') {
@@ -951,6 +963,31 @@ export class TabletRestComponent implements OnInit {
 
     }
     setETA($event) {
+        /* if (!($event.includes("-"))) {
+             this.customnFlag = true;
+             this.customtime = $event;
+             this.tempETA = $event;
+         }
+         else {
+             if ($event == 'Custom') {
+                 this.customnFlag = true;
+                 this.tempETA = $event;
+                 //this.orderDetail.orderStatus.ETA = this.customTime;
+             }
+             else {
+ 
+                 this.tempETA = $event;
+                 this.customnFlag = false;
+ 
+ 
+             }
+             for (var i = 0; i < this.data.length; i++) {
+                 if (this.data[i] == this.orderDetail) {
+                     this.data[i].ETA = this.orderDetail.orderStatus.ETA;
+                 }
+             }
+             console.log(this.data);
+             ///*/
         console.log($event)
         this.customnFlag = false;
         this.tempETA = $event;
@@ -961,6 +998,11 @@ export class TabletRestComponent implements OnInit {
         }
         console.log(this.data);
 
+
+    }
+    confirm($event) {
+        this.tempETA = $event;
+        //alert(this.tempETA);
     }
     amountValidation() {
         var amount = parseFloat(this.partialRefundAmount);
@@ -973,6 +1015,7 @@ export class TabletRestComponent implements OnInit {
         }
     }
     openOrder($event) {
+        this.customnFlag = false;
         var order = $event.ordernumber;
         var orderD = $event.order;
         var data1 = this.data.filter(data => data.color == "red");

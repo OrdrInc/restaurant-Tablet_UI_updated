@@ -18,6 +18,18 @@
           (click)="setETA(eta.pickup.timeslot3)"
           class="btn {{tempETA==eta.pickup.timeslot3 ?'green-button':'empty-button'}}">{{eta.pickup.timeslot3}}
         </button>
+        <div class="text-center">
+          <button (click)="setcustomETA()" class="btn {{customnFlag?'green-button':'empty-button'}}">Custom
+
+          </button>
+          <div *ngIf="customnFlag" class="form-group" style="padding-top:10px">
+
+            <input [disabled]="!customnFlag" (blur)="confirm(customTime)" (focus)="confirm(customTime)" type="email"
+              [(ngModel)]="customTime" class="form-control" id="customtime" placeholder="Enter a Custom Time">
+          </div>
+
+
+        </div>
       </div>
       <div *ngIf="orderDetail.method.type=='Delivery' || orderDetail.method.type=='delivery'"
         class="col-sm-8 pT30 card pB20 dis-unset {{orderDetail.orderStatus.ETA!='TBD'?'':'margin-auto'}}">
@@ -38,6 +50,18 @@
           (click)="setETA(eta.delivery.timeslot3)"
           class="btn {{tempETA==eta.delivery.timeslot3 ?'green-button':'empty-button'}}">{{eta.delivery.timeslot3}}
         </button>
+        <div class="text-center">
+          <button (click)="setcustomETA()" class="btn {{customnFlag?'green-button':'empty-button'}}">Custom
+
+          </button>
+          <div *ngIf="customnFlag" class="form-group" style="padding-top:10px">
+
+            <input [disabled]="!customnFlag" (blur)="confirm(customTime)" (focus)="confirm(customTime)" type="email"
+              [(ngModel)]="customTime" class="form-control" id="customtime" placeholder="Enter a Custom Time">
+          </div>
+
+
+        </div>
 
       </div>
       <div *ngIf="orderDetail.orderStatus.ETA!='TBD'" class="col-sm-4 card text-center">
@@ -71,6 +95,18 @@
           (click)="setETA(eta.pickup.timeslot3)"
           class="btn {{tempETA==eta.pickup.timeslot3 ?'green-button':'empty-button'}}">{{eta.pickup.timeslot3}}
         </button>
+        <div class="text-center">
+          <button (click)="setcustomETA()" class="btn {{customnFlag?'green-button':'empty-button'}}">Custom
+
+          </button>
+          <div *ngIf="customnFlag" class="form-group" style="padding-top:10px">
+
+            <input [disabled]="!customnFlag" (blur)="confirm(customTime)" (focus)="confirm(customTime)" type="email"
+              [(ngModel)]="customTime" class="form-control" id="customtime" placeholder="Enter a Custom Time">
+          </div>
+
+
+        </div>
 
       </div>
       <div *ngIf="orderDetail.method.type=='Delivery' || orderDetail.method.type=='delivery'"
@@ -92,6 +128,18 @@
           (click)="setETA(eta.delivery.timeslot3)"
           class="btn {{tempETA==eta.delivery.timeslot3 ?'green-button':'empty-button'}}">{{eta.delivery.timeslot3}}
         </button>
+        <div class="text-center">
+          <button (click)="setcustomETA()" class="btn {{customnFlag?'green-button':'empty-button'}}">Custom
+
+          </button>
+          <div *ngIf="customnFlag" class="form-group" style="padding-top:10px">
+
+            <input [disabled]="!customnFlag" (blur)="confirm(customTime)" (focus)="confirm(customTime)" type="email"
+              [(ngModel)]="customTime" class="form-control" id="customtime" placeholder="Enter a Custom Time">
+          </div>
+
+
+        </div>
 
       </div>
       <div *ngIf="orderDetail.orderStatus.ETA!='TBD'" class="col-sm-12 card text-center">

@@ -52,9 +52,10 @@
                                                         </app-payment-info>
                                                     </div>
                                                 </div>
-                                                <app-order-detail-eta [orderDetail]="orderDetail"
-                                                    [landscape]="landscape" [eta]="eta" [tempETA]="tempETA"
-                                                    (setETA)="setETA($event)"></app-order-detail-eta>
+                                                <app-order-detail-eta (confirm)="confirm($event)"
+                                                    [orderDetail]="orderDetail" [landscape]="landscape" [eta]="eta"
+                                                    [tempETA]="tempETA" (setETA)="setETA($event)">
+                                                </app-order-detail-eta>
                                             </div>
                                         </div>
                                     </div>
@@ -116,8 +117,9 @@
                                                     <app-payment-info [orderDetail]="orderDetail"></app-payment-info>
                                                 </div>
                                             </div>
-                                            <app-order-detail-eta [orderDetail]="orderDetail" [eta]="eta"
-                                                [landscape]="landscape" [tempETA]="tempETA" (setETA)="setETA($event)">
+                                            <app-order-detail-eta (confirm)="confirm($event)"
+                                                [orderDetail]="orderDetail" [eta]="eta" [landscape]="landscape"
+                                                [tempETA]="tempETA" (setETA)="setETA($event)">
                                             </app-order-detail-eta>
 
                                         </div>
