@@ -1,12 +1,25 @@
 <div *ngIf="!landscape">
   <div *ngIf="orderDetail.orderStatus.refundStatus==false">
-    <div class=" row col-sm-12 pR0">
+    <div *ngIf="orderDetail.orderStatus.isFutureOrder" class=" row col-sm-12 pR0">
+      <div class="col-sm-8 pT30 card pB20 dis-unset margin-auto">
+        <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;text-transform: uppercase">
+          Future Order (F/O)
+          <br><br>
+          <span style="font-size: 40px!important"> {{orderDetail.orderStatus.futureOrderTime}}</span>
+        </h5>
+      </div>
+    </div>
+
+
+
+
+    <div *ngIf="!orderDetail.orderStatus.isFutureOrder" class=" row col-sm-12 pR0">
       <div *ngIf="orderDetail.method.type=='pickup' || orderDetail.method.type=='Pickup'"
         class="col-sm-8 pT30 card pB20 dis-unset {{orderDetail.orderStatus.ETA!='TBD'?'':'margin-auto'}}">
         <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;">
           ETA (minute)
         </h5>
-        <button long-press [timeout]="250" (onLongPress)="setETA(eta.pickup.timeslot1)"
+        <button style="margin-left:20px" long-press [timeout]="250" (onLongPress)="setETA(eta.pickup.timeslot1)"
           (click)="setETA(eta.pickup.timeslot1)"
           class="btn {{tempETA==eta.pickup.timeslot1?'green-button':'empty-button'}}">{{eta.pickup.timeslot1}}
         </button>
@@ -37,7 +50,7 @@
         <h5 class="f-22 bold text-center" style="font-size: 30px !important;">
           ETA (minute)
         </h5>
-        <button long-press [timeout]="250" (onLongPress)="setETA(eta.delivery.timeslot1)"
+        <button style="margin-left:20px" long-press [timeout]="250" (onLongPress)="setETA(eta.delivery.timeslot1)"
           (click)=" setETA(eta.delivery.timeslot1)"
           class="btn {{tempETA==eta.delivery.timeslot1 ?'green-button':'empty-button'}}">
           {{eta.delivery.timeslot1}}
@@ -77,13 +90,23 @@
 </div>
 <div *ngIf="landscape">
   <div *ngIf="orderDetail.orderStatus.refundStatus==false">
-    <div class=" row col-sm-12">
+    <div *ngIf="orderDetail.orderStatus.isFutureOrder" class="  row col-sm-12 ">
+      <div class="col-sm-12 card pB20 dis-unset">
+        <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;text-transform: uppercase">
+          Future Order (F/O)
+          <br>
+          {{orderDetail.orderStatus.futureOrderTime}}
+        </h5>
+      </div>
+    </div>
+
+    <div *ngIf="!orderDetail.orderStatus.isFutureOrder" class=" row col-sm-12">
       <div *ngIf="orderDetail.method.type=='pickup' || orderDetail.method.type=='Pickup'"
         class="col-sm-12 card pB20 dis-unset">
         <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;">
           ETA (minute)
         </h5>
-        <button long-press [timeout]="250" (onLongPress)="setETA(eta.pickup.timeslot1)"
+        <button style="margin-left:20px" long-press [timeout]="250" (onLongPress)="setETA(eta.pickup.timeslot1)"
           (click)="setETA(eta.pickup.timeslot1)"
           class="btn {{tempETA==eta.pickup.timeslot1?'green-button':'empty-button'}}">{{eta.pickup.timeslot1}}
         </button>
@@ -115,7 +138,7 @@
         <h5 class="f-22 bold text-center pad-20 " style="font-size: 30px !important;">
           ETA (minutes)
         </h5>
-        <button long-press [timeout]="250" (onLongPress)="setETA(eta.delivery.timeslot1)"
+        <button style="margin-left:20px" long-press [timeout]="250" (onLongPress)="setETA(eta.delivery.timeslot1)"
           (click)=" setETA(eta.delivery.timeslot1)"
           class="btn {{tempETA==eta.delivery.timeslot1 ?'green-button':'empty-button'}}">
           {{eta.delivery.timeslot1}}

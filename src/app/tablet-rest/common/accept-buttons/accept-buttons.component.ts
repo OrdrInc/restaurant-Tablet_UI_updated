@@ -12,16 +12,23 @@ export class AcceptButtonsComponent implements OnInit {
   @Output('acceptOrder') acceptOrders: EventEmitter<any> = new EventEmitter();
   @Output('closebutton') closebuttons: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit() {
+    if (this.orderDetail.orderStatus.isFutureOrder) {
+      this.tempETA = "F/O";
+    }
   }
   closebutton() {
     this.closebuttons.emit();
   }
   acceptOrder(id, eta) {
+
     this.acceptOrders.emit({ id: id, eta: eta });
 
   }
 
 }
+

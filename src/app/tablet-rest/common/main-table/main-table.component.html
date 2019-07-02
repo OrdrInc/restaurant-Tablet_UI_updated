@@ -18,7 +18,9 @@
         <td *ngIf="order.method.type=='delivery'" class="text-center f-20 wlSpace">DEL</td>
         <td class="text-center f-20 wlSpace">{{order.customer.timeStamp}}</td>
         <td class="text-center f-20 wlSpace">$ {{order.paidDollarValue.paidTotal}}</td>
-        <td class="text-center f-20 wlSpace">{{order.orderStatus.ETA}}</td>
+        <td *ngIf="!order.orderStatus.isFutureOrder" class="text-center f-20 wlSpace">{{order.orderStatus.ETA}}
+        </td>
+        <td *ngIf="order.orderStatus.isFutureOrder" class="text-center f-20 wlSpace"> F/O </td>
       </tr>
     </tbody>
   </table>
@@ -46,7 +48,9 @@
         <td *ngIf="order.method.type=='pickup'" class="text-center f-20 wlSpace">P/U</td>
         <td *ngIf="order.method.type=='delivery'" class="text-center f-20 wlSpace">DEL</td>
         <td class="text-center f-20 wlSpace">{{order.customer.timeStamp}}</td>
-        <td class="text-center f-20 wlSpace">{{order.orderStatus.ETA}}</td>
+        <td *ngIf="!order.orderStatus.isFutureOrder" class="text-center f-20 wlSpace">{{order.orderStatus.ETA}}
+        </td>
+        <td *ngIf="order.orderStatus.isFutureOrder" class="text-center f-20 wlSpace"> F/O </td>
       </tr>
     </tbody>
   </table>

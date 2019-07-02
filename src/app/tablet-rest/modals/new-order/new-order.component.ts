@@ -7,12 +7,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class NewOrderComponent implements OnInit {
   @Input() orderCount;
-  @Output('click') clicked: EventEmitter<any> = new EventEmitter();
-  constructor() { }
+  @Output('clk') clicked: EventEmitter<any> = new EventEmitter();
+  constructor() {
+    console.log("new order alert");
+  }
 
   ngOnInit() {
   }
-  click() {
+  clickss() {
     this.clicked.emit();
   }
 

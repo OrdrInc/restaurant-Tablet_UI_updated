@@ -6,12 +6,14 @@
          class="btn {{tempETA==''?'grey':'btn-primary green'}}  bold white f-22 pR30 pL30 wlSpace">Accept
          Order
       </button>
-      <button *ngIf="orderDetail.orderStatus.ETA!='TBD'" long-press [timeout]="250"
-         (onLongPress)="acceptOrder(orderDetail.orderStatus.orderId,orderDetail.orderStatus.ETA)"
-         (click)="acceptOrder(orderDetail.orderStatus.orderId,tempETA)"
-         class="btn {{tempETA==''?'grey':'btn-primary green'}}  bold white f-22 pR30 pL30 wlSpace">
-         Update ETA
-      </button>
+      <span *ngIf="!orderDetail.orderStatus.isFutureOrder">
+         <button *ngIf="orderDetail.orderStatus.ETA!='TBD'" long-press [timeout]="250"
+            (onLongPress)="acceptOrder(orderDetail.orderStatus.orderId,orderDetail.orderStatus.ETA)"
+            (click)="acceptOrder(orderDetail.orderStatus.orderId,tempETA)"
+            class="btn {{tempETA==''?'grey':'btn-primary green'}}  bold white f-22 pR30 pL30 wlSpace">
+            Update ETA
+         </button>
+      </span>
    </span>
    <button long-press [timeout]="250" (onLongPress)="closebutton()" (click)="closebutton()" type="button"
       class="btn btn-outline-primary bold white f-22 pR30 pL30 wlSpace" data-dismiss="modal">Close</button>
@@ -25,11 +27,13 @@
          class="btn {{tempETA==''?'grey':'btn-primary green'}}  bold white f-22 pR30 pL30 wlSpace">Accept
          Order
       </button>
-      <button *ngIf="orderDetail.orderStatus.ETA!='TBD'" long-press [timeout]="250"
-         (onLongPress)="acceptOrder(orderDetail.orderStatus.orderId,orderDetail.orderStatus.ETA)"
-         (click)="acceptOrder(orderDetail.orderStatus.orderId,tempETA)"
-         class="btn {{tempETA==''?'grey':'btn-primary green'}}  bold white f-22 pR30 pL30 wlSpace">
-         Update ETA
-      </button>
+      <span *ngIf="!orderDetail.orderStatus.isFutureOrder">
+         <button *ngIf="orderDetail.orderStatus.ETA!='TBD'" long-press [timeout]="250"
+            (onLongPress)="acceptOrder(orderDetail.orderStatus.orderId,orderDetail.orderStatus.ETA)"
+            (click)="acceptOrder(orderDetail.orderStatus.orderId,tempETA)"
+            class="btn {{tempETA==''?'grey':'btn-primary green'}}  bold white f-22 pR30 pL30 wlSpace">
+            Update ETA
+         </button>
+      </span>
    </span>
 </div>

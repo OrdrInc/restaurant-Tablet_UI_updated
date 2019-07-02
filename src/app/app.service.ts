@@ -19,7 +19,7 @@ export class AppService {
     };
     getInitalDetails(restId) {
         console.log("getInital details");
-        let Url = "http://18.216.166.30/initialLoad";
+        let Url = "http://3.16.41.42/initialLoad";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             "restId": "+1" + restId
@@ -32,7 +32,7 @@ export class AppService {
     }
     getAllOrders(restid, date) {
         console.log("Get all Orders");
-        let Url = "http://18.216.166.30/getAllOrders";
+        let Url = "http://3.16.41.42/getAllOrders";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             "restId": "+1" + restid,
@@ -45,7 +45,7 @@ export class AppService {
     }
     pauseOrders(restid) {
         console.log("Pause Orders");
-        let Url = "http://18.216.166.30/pauseOrders";
+        let Url = "http://3.16.41.42/pauseOrders";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             "restId": "+1" + restid
@@ -57,7 +57,7 @@ export class AppService {
     }
     acceptOrders(orderid, eta) {
         console.log("Accept Orders");
-        let Url = "http://18.216.166.30/acceptOrders";
+        let Url = "http://3.16.41.42/acceptOrders";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             "orderId": orderid,
@@ -73,7 +73,7 @@ export class AppService {
 
     refundOrders(orderId, reason, dollarValue, timestamp, refundType) {
         console.log("refund order");
-        let Url = "http://18.216.166.30/refundOrders";
+        let Url = "http://3.16.41.42/refundOrders";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             'orderId': orderId,
@@ -91,7 +91,7 @@ export class AppService {
     checkPin(restId, storePin) {
         console.log("CheckPin");
         storePin = storePin.toString();
-        let Url = "http://18.216.166.30/checkStorePin";
+        let Url = "http://3.16.41.42/checkStorePin";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data =
         {
@@ -107,7 +107,7 @@ export class AppService {
     }
     resetPin(restId) {
         console.log("ResetPin");
-        let Url = "http://18.216.166.30/resetStorePin";
+        let Url = "http://3.16.41.42/resetStorePin";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data =
         {
@@ -123,7 +123,7 @@ export class AppService {
     storeReport(restId, storeDate) {
         console.log("storeReport");
 
-        let Url = "http://18.216.166.30/getDailyStoreData";
+        let Url = "http://3.16.41.42/getDailyStoreData";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data =
         {
@@ -141,7 +141,7 @@ export class AppService {
     resetETA(restId, extendFlag, pickupETA, deliveryETA) {
         console.log("storeReport");
 
-        let Url = "http://18.216.166.30/resetEta";
+        let Url = "http://3.16.41.42/resetEta";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data =
         {
