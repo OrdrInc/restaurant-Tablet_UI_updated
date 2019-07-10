@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./payment-info.component.css']
 })
 export class PaymentInfoComponent implements OnInit {
-  @Input() orderDetail: string;
+  @Input() orderDetail: any;;
   constructor() { }
 
   ngOnInit() {

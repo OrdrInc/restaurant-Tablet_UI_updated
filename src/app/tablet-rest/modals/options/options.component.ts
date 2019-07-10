@@ -30,9 +30,9 @@ export class OptionsComponent implements OnInit {
     //$('#modalPoll-1').modal('hide');
     //$('#extendeta').modal('show');
   }
-  pauses(storePin) {
-    console.log(storePin);
-    this.pause.emit(storePin);
+  pauses() {
+    console.log();
+    this.pause.emit();
   }
   storeReport() {
 
