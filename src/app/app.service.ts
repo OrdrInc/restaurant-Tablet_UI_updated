@@ -21,7 +21,7 @@ export class AppService {
 
     constructor(private http: Http, private options: RequestOptions) {
         this.options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) });
-        this.serverused = this.server1;
+        this.serverused = this.prodserver;
     };
     getInitalDetails(restId) {
         console.log("getInital details");
