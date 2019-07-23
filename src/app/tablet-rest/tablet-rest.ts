@@ -131,6 +131,7 @@ export class TabletRestComponent implements OnInit {
     extendDeliveryTemp: any;
     smallload: boolean = false;
     redplay: number = 0;
+    customTimeFlag: boolean = false;
     sound = new Howl({
         src: ['../../../assets/sounds/slow-spring-board.mp3'],
         autoplay: true,
@@ -882,10 +883,18 @@ export class TabletRestComponent implements OnInit {
         if (this.customtime != undefined || this.customtime != null) {
             var eta = this.customtime;
             var orderid = $event.id;
+
         }
         else {
             var orderid = $event.id;
             var eta = $event.eta;
+
+            if (eta.toString().indexOf("-") == -1) {
+                this.customTimeFlag = true;
+            }
+            else {
+                this.customTimeFlag = false;
+            }
         }
         console.log(orderid)
         console.log(eta)
@@ -894,7 +903,7 @@ export class TabletRestComponent implements OnInit {
         }
         else {
             this.loading = true;
-            this.service.acceptOrders(orderid, eta).subscribe(
+            this.service.acceptOrders(orderid, eta, this.customTimeFlag).subscribe(
                 data => {
                     this.loading = false;
                     if (data.status == 200) {

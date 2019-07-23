@@ -13,13 +13,19 @@ export class AppService {
 
     public updateProfileOptions: Array<any> = [];
     public updateEnterpriseStatus: boolean = false;
+    server1 = "http://18.216.166.30";
+    server2 = "";
+    server3 = "";
+    prodserver = "https://www.tutalec.com";
+    serverused: any;
 
     constructor(private http: Http, private options: RequestOptions) {
         this.options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) });
+        this.serverused = this.server1;
     };
     getInitalDetails(restId) {
         console.log("getInital details");
-        let Url = "https://www.tutalec.com/initialLoad";
+        let Url = this.serverused + "/initialLoad";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             "restId": "+1" + restId
@@ -32,7 +38,7 @@ export class AppService {
     }
     getAllOrders(restid, date) {
         console.log("Get all Orders");
-        let Url = "https://www.tutalec.com/getAllOrders";
+        let Url = this.serverused + "/getAllOrders";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             "restId": "+1" + restid,
@@ -45,7 +51,7 @@ export class AppService {
     }
     pauseOrders(restid) {
         console.log("Pause Orders");
-        let Url = "https://www.tutalec.com/pauseOrders";
+        let Url = this.serverused + "/pauseOrders";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             "restId": "+1" + restid
@@ -55,13 +61,15 @@ export class AppService {
             .map((res: Response) => res)
             .catch(this.handleError);
     }
-    acceptOrders(orderid, eta) {
+    acceptOrders(orderid, eta, customFlag) {
         console.log("Accept Orders");
-        let Url = "https://www.tutalec.com/acceptOrders";
+
+        let Url = this.serverused + "/acceptOrders";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             "orderId": orderid,
-            "eta": eta
+            "eta": eta,
+            "customFlag": customFlag
         }
         let reqOptions = new RequestOptions({ headers: headerInfo });
         console.log(data)
@@ -73,7 +81,7 @@ export class AppService {
 
     refundOrders(orderId, reason, dollarValue, timestamp, refundType) {
         console.log("refund order");
-        let Url = "https://www.tutalec.com/refundOrders";
+        let Url = this.serverused + "/refundOrders";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             'orderId': orderId,
@@ -91,7 +99,7 @@ export class AppService {
     checkPin(restId, storePin) {
         console.log("CheckPin");
         storePin = storePin.toString();
-        let Url = "https://www.tutalec.com/checkStorePin";
+        let Url = this.serverused + "/checkStorePin";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data =
         {
@@ -107,7 +115,7 @@ export class AppService {
     }
     resetPin(restId) {
         console.log("ResetPin");
-        let Url = "https://www.tutalec.com/resetStorePin";
+        let Url = this.serverused + "/resetStorePin";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data =
         {
@@ -123,7 +131,7 @@ export class AppService {
     storeReport(restId, storeDate) {
         console.log("storeReport");
 
-        let Url = "https://www.tutalec.com/getDailyStoreData";
+        let Url = this.serverused + "/getDailyStoreData";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data =
         {
@@ -141,7 +149,7 @@ export class AppService {
     resetETA(restId, extendFlag, pickupETA, deliveryETA) {
         console.log("storeReport");
 
-        let Url = "https://www.tutalec.com/resetEta";
+        let Url = this.serverused + "/resetEta";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data =
         {
