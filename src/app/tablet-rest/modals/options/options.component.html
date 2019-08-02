@@ -23,24 +23,24 @@
         </div>
         <hr>
 
-        <p Class="md-form">
-          <span *ngIf="restStatus" class="nav-items" (click)="pauses()"> Pause Restaurant</span>
-          <span *ngIf="!restStatus" (click)="pauses()" class="nav-items">Resume Restaurant</span>
+        <p (click)="pauses()" Class="md-form">
+          <span *ngIf="restStatus" class="nav-items"> Pause Restaurant</span>
+          <span *ngIf="!restStatus" class="nav-items">Resume Restaurant</span>
 
         </p>
         <hr>
-        <div class="md-form">
-          <p Class="bold" (click)="storeReport()" class="nav-items"> Store Report
+        <div (click)="storeReport()" class="md-form">
+          <p Class="bold" class="nav-items"> Store Report
           </p>
         </div>
         <hr>
-        <div class="md-form">
-          <p Class="bold" (click)="extendETAPopup()" class="nav-items"> Extend ETA
+        <div (click)="extendETAPopup()" class="md-form">
+          <p Class="bold" class="nav-items"> Extend ETA
           </p>
         </div>
         <hr>
-        <div class="md-form">
-          <p Class="bold" (click)="contactus()" class="nav-items"> Contact
+        <div (click)="contactus()" class="md-form">
+          <p Class="bold" class="nav-items"> Contact
             Us
           </p>
         </div>
