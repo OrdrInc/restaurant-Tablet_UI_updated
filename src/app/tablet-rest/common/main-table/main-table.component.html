@@ -3,6 +3,7 @@
     <thead class="black-bg text-center text-upper">
       <tr class="tabb">
         <th scope="col">T#</th>
+        <th scope="col">POSID</th>
         <th scope="col">Name</th>
         <th scope="col">Type</th>
         <th scope="col">TimeStamp</th>
@@ -13,6 +14,7 @@
     <tbody>
       <tr class="{{order.color}}" (click)="openOrder(order.restaurant.TNumber, order)" *ngFor="let order of data">
         <th class="text-center f-20 wlSpace" scope="row">{{order.restaurant.tNum}}</th>
+        <th class="text-center f-20 wlSpace" scope="row">{{order.restaurant.ticketId}}</th>
         <td class="text-center f-20 wlSpace">{{order.customer.name}}</td>
         <td *ngIf="order.method.type=='pickup'" class="text-center f-20 wlSpace">P/U</td>
         <td *ngIf="order.method.type=='delivery'" class="text-center f-20 wlSpace">DEL</td>
@@ -34,6 +36,7 @@
     <thead class="black-bg text-upper">
       <tr class="tabb text-center">
         <th scope="col">T#</th>
+        <th scope="col">POSID</th>
         <th scope="col">Name</th>
         <th scope="col">Type</th>
         <th scope="col">Time</th>
@@ -44,6 +47,7 @@
       <tr class="{{order.color}}" *ngFor="let order of data; index as i "
         (click)="openOrder(order.restaurant.tNum, order)">
         <th class="text-center f-20 wlSpace" scope="row">{{order.restaurant.tNum}}</th>
+        <th class="text-center f-20 wlSpace" scope="row">{{order.restaurant.ticketId}}</th>
         <td class="text-center f-20 wlSpace">{{order.customer.name}}</td>
         <td *ngIf="order.method.type=='pickup'" class="text-center f-20 wlSpace">P/U</td>
         <td *ngIf="order.method.type=='delivery'" class="text-center f-20 wlSpace">DEL</td>
