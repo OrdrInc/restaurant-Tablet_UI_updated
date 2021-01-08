@@ -31,6 +31,8 @@ import { OrderDetailEtaComponent } from './tablet-rest/common/order-detail-eta/o
 import { AcceptButtonsComponent } from './tablet-rest/common/accept-buttons/accept-buttons.component';
 import { TabletRestComponent } from './tablet-rest/tablet-rest';
 import { LoginComponent } from './tablet-admin/login/login.component';
+import { CrubsideComponent } from './tablet-rest/crubside/crubside.component';
+import { TicketIdPopupComponent } from './tablet-rest/crubside/ticket-id-popup/ticket-id-popup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,9 @@ import { LoginComponent } from './tablet-admin/login/login.component';
     OrderDetailEtaComponent,
     AcceptButtonsComponent,
     TabletRestComponent,
-    LoginComponent
+    LoginComponent,
+    CrubsideComponent,
+    TicketIdPopupComponent
 
   ],
   imports: [

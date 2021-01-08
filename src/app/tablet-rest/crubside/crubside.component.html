@@ -1,0 +1,74 @@
+<div id="header">
+  <nav class="navbar pT15 pL25 pad-10 firebrick">
+    <span class="white-c f-23 lwSpace">CRUBSIDE DASHBOARD  {{ resturantName }}</span>
+    <span class="fRight mR20 bold white-c f-18"
+    >No of cars checked in
+    <span class="badge badge-dark bR20 f-18">{{ checkedInCars }}</span></span
+  >
+  </nav>
+</div>
+<!--<nav class="navbar black-bg">
+  <span class="white-c f-18 bold">POS ID</span
+  ><span class="fRight mR20 bold white-c f-18"
+    >No of cars checked in
+    <span class="badge badge-danger bR20 f-18">{{ checkedInCars }}</span></span
+  >
+</nav>-->
+
+<table class="table item-center" align="center">
+  <tbody style="color: black" class="">
+    <tr *ngFor="let row of displayData" class="{{row.isDone?'grey-c':''}} {{row.border}}">
+      <th
+        style="width: 10%"
+        class="pB0"
+        style="font-weight: bold; padding-left: 20px"
+      >
+        <p (click)="changeticketId(row)" class="{{ row.ticketId == '*' ? 'ticketborder' : '' }} f-30">
+          <span *ngIf="row.ticketId != '*'">{{ row.ticketId }}</span>
+          <span *ngIf="row.ticketId == '*'">&nbsp;</span>
+        </p>
+        <p class="" style="font-size: 1.4vw;">{{ row.time }}</p>
+      </th>
+
+      <th style="width: 25%" class="pB0">
+        <p class="f-25 bold mB0">{{ getFirstName(row.name, "firstname") }}</p>
+        <p class="f-20 mB0">{{ getFirstName(row.name, "lastname") }}</p>
+        <p class="f-25 bold mB0">{{ row.phone }}</p>
+      </th>
+      <th style="font-size: 2.1vw; width: 55%">
+        <span style="float: left; padding-top: 10px">{{ row.notes }}</span>
+      </th>
+      <th style="width: 10%">
+        <button (click)="row.isDone= !row.isDone;calculateCars();done()" *ngIf="!row.isDone"
+          style="
+           font-size: 1vw;
+            font-weight: bold;
+            border-radius: 8px;
+            background-color: #3fab59;
+          "
+          class="btn white-c"
+        >
+         DONE
+         
+        </button>
+        <button *ngIf="row.isDone"
+        (click)="row.isDone= !row.isDone;calculateCars();done()"
+        style="
+         font-size: 1vw;
+          font-weight: bold;
+          border-radius: 8px;
+          background-color: grey;
+        "
+        class="btn white-c"
+      >
+       UNDO
+       
+      </button>
+      </th>
+    </tr>
+  </tbody>
+</table>
+<div class="text-center">
+  <button (click)="pushData()" class="btn btn-primary">Push Data</button>
+</div>
+<app-ticket-id-popup [ticketId]="ticketId" (save)="save($event)"></app-ticket-id-popup>
