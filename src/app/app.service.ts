@@ -50,6 +50,53 @@ export class AppService {
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }
+    getrestInfo(restid) {
+        let Url = this.serverused + "/getStoreInfo";
+        let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
+        let data = {
+            "restId": "+1" + restid,
+        }
+        let reqOptions = new RequestOptions({ headers: headerInfo });
+        return this.http.post(Url, data, reqOptions)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+    getOneDayRecord(storeId,storeDate) {
+        let Url = this.serverused + "/getOneDayRecord";
+        let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
+        let data = {
+            "restId": storeId,
+            "storeDate": storeDate
+        }
+        let reqOptions = new RequestOptions({ headers: headerInfo });
+        return this.http.post(Url, data, reqOptions)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+    tabletDoneUndoneTogle(curbId,status) {
+        let Url = this.serverused + "/delToCarAction";
+        let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
+        let data = {
+            "curbId": curbId,
+            "status": status
+        }
+        let reqOptions = new RequestOptions({ headers: headerInfo });
+        return this.http.post(Url, data, reqOptions)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+    updateTicketId(curbId,ticketId) {
+        let Url = this.serverused + "/updateTicketId";
+        let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
+        let data = {
+            "curbId": curbId,
+            "ticketId": ticketId
+        }
+        let reqOptions = new RequestOptions({ headers: headerInfo });
+        return this.http.post(Url, data, reqOptions)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
     pauseOrders(restid) {
         console.log("Pause Orders");
         let Url = this.serverused + "/pauseOrders";
