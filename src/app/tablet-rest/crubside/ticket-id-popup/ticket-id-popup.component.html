@@ -1,0 +1,32 @@
+<div class="modal fade" id="ticketIdPop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-notify modal-success" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div style="background-color: black!important;" class="modal-header d-flex justify-content-center">
+        <p style="font-size: 20px!important;" class="heading mod-head">TICKET ID</p>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+       
+        <h4>Enter the Ticket Id</h4>
+        <div class="col-auto w70 pL0 margin-auto pT10">
+
+          <div class="input-group mb-2">
+
+              <input style="height:45px"  type="text" [(ngModel)]="ticketId"
+                  class="form-control" placeholder="Ticket Id">
+
+          </div>
+      </div>
+      </div>
+      <!--Footer-->
+      <div style="height:auto" class="modal-footer flex-center">
+        <a (click)="saveTicketId()" style="background-color: black" class="btn {{ticketId==null||ticketId==''?'disabled':''}} btn-success">Save</a>
+        <a data-dismiss="modal" style="color:rgb(2, 1, 1)!important" class="btn  white-bg black-c">Close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

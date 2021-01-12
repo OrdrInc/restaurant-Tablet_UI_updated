@@ -8,9 +8,14 @@ import { Component, OnInit, Input } from '@angular/core';
 export class FooterComponent implements OnInit {
   @Input() landscape;
   @Input() orderFlow;
+  year;
   constructor() { }
 
   ngOnInit() {
+    
+      var date= new Date;
+      this.year= date.getFullYear();
+    
   }
 
 }
