@@ -11,7 +11,7 @@ export class TicketIdPopupComponent implements OnInit {
   constructor(private service: AppService) { }
   
   ngOnInit() {
-   
+  
   }
   saveTicketId(){
    this.saves.emit(this.ticketId); 

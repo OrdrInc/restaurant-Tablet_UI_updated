@@ -1,7 +1,7 @@
 import { Component, OnInit ,ViewChild,ElementRef} from '@angular/core';
 import { AppService } from './../../app.service';
 import { Howl, Howler } from 'howler';
-
+import Pusher from 'pusher-js';
 declare var $: any;
 @Component({
   selector: 'app-crubside',
@@ -19,6 +19,9 @@ audio: any;
 selectedrow;
 displayData;
 curbId;
+year;
+pusher: any;
+channel: any;
 data=[
  /* {
     ticketId:'127',
@@ -41,7 +44,7 @@ data=[
 ]
   constructor(private service: AppService) { 
     var str = window.location.href;
-        var res = str.split("crubside/");
+        var res = str.split("curbside/");
         this.id = res[1];
         this.service.getrestInfo(this.id).subscribe(
           data => {
@@ -53,6 +56,16 @@ data=[
               console.log(error);
           }
           });
+          this.pusher = new Pusher("8892259dee5062541bfb", {
+            cluster: "us2",
+            forceTLS: true
+        });
+        this.channel = this.pusher.subscribe( this.id);
+        this.channel.bind('curbSend', (data) => {
+            console.log(data);
+            this.pushData(data);
+          
+        });
 
   }
   getAlldata(restId,storeDate){
@@ -62,7 +75,7 @@ data=[
       this.data=data;
      this.displayData= this.putAllUndoneAtBottom(this.data);
      for(var i=0;i< this.displayData.length;i++){
-       this.displayData[i]['border']='';
+       this.displayData[i]['border']='black-border';
      }
      this.calculateCars();
       });
@@ -75,12 +88,20 @@ data=[
    else{
    let x=name.split(" ",1);
    let y=name.substring(x[0].length);
+   if(y.length==0){
+     y='';
+   }
    return y;
    }
   }
  changeticketId(row){
    this.selectedrow=row;
+   if(row.OrderInfo.ticketId=='*'){
+     this.ticketId= null;
+   }
+   else{
    this.ticketId=row.OrderInfo.ticketId;
+   }
    this.curbId=row.CurbId
   $('#ticketIdPop').modal('show');
  }
@@ -115,17 +136,10 @@ data=[
       this.audio.play();
   
 }
- pushData(){
-   var pusherData={
-    ticketId: Math.floor((Math.random() * 100) + 1).toString(),
-    time:'9:22',
-    name:'Aplha',
-    phone:'(248)-767-7673',
-    notes:'Black Hyundai Elantra.',
-    isDone:false,
-    border:'red-border'
-   }
+ pushData(data){
+   var pusherData=data;
    pusherData["timer"] = 10;
+   pusherData["border"]="black-border"
    console.log(pusherData);
    this.push(pusherData);
   
@@ -190,7 +204,7 @@ this.playAudio()
           for (var z = 0; z < this.displayData.length; z++) {
               if (this.displayData[z] == data) {
 
-                  this.displayData[z].border = '';
+                //  this.displayData[z].border = '';
 
               }
           }
@@ -209,6 +223,9 @@ formatPhone(x) {
   // console.log(val)
   const displayNo = `(${val[2]}${val[3]}${val[4]}) ${val[5]}${val[6]}${val[7]}-${val[8]}${val[9]}${val[10]}${val[11]}`;
   return displayNo;
+}
+refresh(){
+  window.location.reload();
 }
   ngOnInit() {
     this.displayData= this.putAllUndoneAtBottom(this.data);

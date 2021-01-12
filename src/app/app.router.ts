@@ -10,7 +10,7 @@ export const urlRoutes: Routes = [
         component: TabletRestComponent,
     },
     {
-        path: 'crubside/:id',
+        path: 'curbside/:id',
         component: CrubsideComponent,
     },
     {
