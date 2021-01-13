@@ -8,12 +8,18 @@ import { AppService } from './../../../app.service';
 export class TicketIdPopupComponent implements OnInit {
   @Input() ticketId: string;
   @Output('save') saves: EventEmitter<any> = new EventEmitter();
-  constructor(private service: AppService) { }
+  displayTicketId;
+  constructor(private service: AppService) { 
+  }
   
   ngOnInit() {
   
   }
+  close(){
+    this.ticketId=null;
+  }
   saveTicketId(){
-   this.saves.emit(this.ticketId); 
+   this.saves.emit(this.ticketId);
+   this.ticketId=null; 
   }
 }

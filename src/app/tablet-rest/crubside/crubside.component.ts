@@ -138,8 +138,8 @@ data=[
 }
  pushData(data){
    var pusherData=data;
-   pusherData["timer"] = 10;
-   pusherData["border"]="black-border"
+   pusherData["timer"] = 20;
+   pusherData["border"]="black-back"
    console.log(pusherData);
    this.push(pusherData);
   
@@ -172,6 +172,7 @@ data=[
           for(var i=0;i<this.displayData.length;i++){
             if(this.displayData[i].CurbId==row.CurbId){
               this.displayData[i].status= !this.displayData[i].status;
+              this.displayData[i].border='black-border';
             }
           } 
             this.displayData= this.putAllUndoneAtBottom(this.displayData);
@@ -204,7 +205,7 @@ this.playAudio()
           for (var z = 0; z < this.displayData.length; z++) {
               if (this.displayData[z] == data) {
 
-                //  this.displayData[z].border = '';
+                this.displayData[z].border = 'black-border';
 
               }
           }

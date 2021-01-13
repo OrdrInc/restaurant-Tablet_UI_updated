@@ -21,9 +21,9 @@
       >
         <span (click)="changeticketId(row)" class="{{ row.OrderInfo.ticketId == '*' ? '' : '' }} f-30">
           <div class="text-center" *ngIf="row.OrderInfo.ticketId != '*'">{{ row.OrderInfo.ticketId }}</div>
-          <div class="text-center" *ngIf="row.OrderInfo.ticketId == '*'"><i style="color: #3fab59;" class="fa fa-plus f-22" aria-hidden="true"></i></div>
+          <div class="text-center" *ngIf="row.OrderInfo.ticketId == '*'"><i style="color: #3fab59;" class="f-22" aria-hidden="true">#</i></div>
         </span>
-        <p class="mT15" style="font-size: 2.2vw;">{{ row.DisplayTime | slice :0:5 }}</p>
+        <p class="mT7" style="font-size: 2.2vw;">{{ row.DisplayTime | slice :0:5 }}</p>
       </th>
 
       <th style="width: 25%" class="pB0">

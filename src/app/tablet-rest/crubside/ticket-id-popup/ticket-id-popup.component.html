@@ -1,4 +1,4 @@
-<div class="modal fade" id="ticketIdPop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="ticketIdPop" style="top:0%!important" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg modal-notify modal-success" role="document">
     <!--Content-->
@@ -15,16 +15,16 @@
 
           <div class="input-group mb-2">
 
-              <input style="height:45px"  type="text" [(ngModel)]="ticketId"
+              <input style="height:45px"  type="tel" [(ngModel)]="ticketId"
                   class="form-control" placeholder="Ticket Id">
 
           </div>
       </div>
       </div>
       <!--Footer-->
-      <div style="height:auto" class="modal-footer flex-center">
-        <a (click)="saveTicketId()" style="background-color: black" class="btn {{ticketId==null||ticketId==''?'disabled':''}} btn-success">Save</a>
-        <a data-dismiss="modal" style="color:rgb(2, 1, 1)!important" class="btn  white-bg black-c">Close</a>
+      <div style="height:auto" class="modal-footer flex-center pT0">
+        <a (click)="saveTicketId()" style="background-color: black;border: 1px solid #3fab59;" class="btn {{ticketId==null||ticketId==''|| ticketId==' '?'disabled':'green-btn'}} btn-success f-18 mR20">Save</a>
+        <a (click)="close()" data-dismiss="modal" style="color:rgb(2, 1, 1)!important;border: 1px solid #3fab59;" class="btn  white-bg black-c f-18 mL20">Close</a>
       </div>
     </div>
     <!--/.Content-->
