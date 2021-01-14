@@ -63,7 +63,12 @@ data=[
         this.channel = this.pusher.subscribe( this.id);
         this.channel.bind('curbSend', (data) => {
             console.log(data);
+            if(data.length==0){
+              this.refresh();
+            }
+            else{
             this.pushData(data);
+            }
           
         });
 
