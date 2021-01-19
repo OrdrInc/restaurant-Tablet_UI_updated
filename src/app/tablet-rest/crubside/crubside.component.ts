@@ -21,7 +21,14 @@ displayData;
 curbId;
 year;
 pusher: any;
+custId:any;
+restId:any;
 channel: any;
+timeJson:any={
+  isReply:false,
+    repliedValue:'',
+    btnValue:[]
+}
 data=[
  /* {
     ticketId:'127',
@@ -149,6 +156,7 @@ data=[
    this.push(pusherData);
   
  }
+
  putAllUndoneAtBottom(data){
    var done=[];
    var undone=[];
@@ -163,7 +171,33 @@ data=[
    var displayData=undone.concat(done);
    return displayData;
  }
+respond(row){
+  this.curbId=row.CurbId;
+  this.custId=row.CustomerId;
+  this.restId=row.RestaurantId;
+  //make backend call after success show this;
+  this.service.getresponseInfo(this.curbId).subscribe(
+    data => {
+      this.timeJson=data;
+      $('#respondPop').modal('show');
+    });
+  
+ 
+ 
+}
+respondSave($event){
+  console.log($event);
+  this.service.updateresponseInfo($event.curbId,$event.selectedTime,this.restId,this.custId).subscribe(
+    data => {
+      $('#respondPop').modal('hide');
+      $('#etaupdatesucess').modal('show');
+      setTimeout(function () {
+      $('#etaupdatesucess').modal('hide');
+          
+      }, 5000);
+    });
 
+}
  done(row,status){
    if(status=='done'){
      var value= true;

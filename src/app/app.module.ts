@@ -33,6 +33,8 @@ import { TabletRestComponent } from './tablet-rest/tablet-rest';
 import { LoginComponent } from './tablet-admin/login/login.component';
 import { CrubsideComponent } from './tablet-rest/crubside/crubside.component';
 import { TicketIdPopupComponent } from './tablet-rest/crubside/ticket-id-popup/ticket-id-popup.component';
+import { RespondPopupComponent } from './tablet-rest/crubside/respond-popup/respond-popup.component';
+import { RespondSuccessComponent } from './tablet-rest/crubside/respond-popup/respond-success/respond-success.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +62,9 @@ import { TicketIdPopupComponent } from './tablet-rest/crubside/ticket-id-popup/t
     TabletRestComponent,
     LoginComponent,
     CrubsideComponent,
-    TicketIdPopupComponent
+    TicketIdPopupComponent,
+    RespondPopupComponent,
+    RespondSuccessComponent
 
   ],
   imports: [
