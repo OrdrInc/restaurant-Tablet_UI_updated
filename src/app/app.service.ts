@@ -97,6 +97,30 @@ export class AppService {
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }
+    getresponseInfo(curbId) {
+        let Url = this.serverused + "/getResponseInfo";
+        let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
+        let data = {
+            "curbId": curbId,
+        }
+        let reqOptions = new RequestOptions({ headers: headerInfo });
+        return this.http.post(Url, data, reqOptions)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+    updateresponseInfo(curbId,time,restId,custId) {
+        let Url = this.serverused + "/updateResponseInfo";
+        let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
+        let data = {
+            "custId" : custId,
+            "restId" : restId, 
+            "text" : time, 
+            "curbId" :curbId}
+        let reqOptions = new RequestOptions({ headers: headerInfo });
+        return this.http.post(Url, data, reqOptions)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
     pauseOrders(restid) {
         console.log("Pause Orders");
         let Url = this.serverused + "/pauseOrders";
