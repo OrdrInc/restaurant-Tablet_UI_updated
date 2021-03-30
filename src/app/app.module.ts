@@ -35,6 +35,9 @@ import { CrubsideComponent } from './tablet-rest/crubside/crubside.component';
 import { TicketIdPopupComponent } from './tablet-rest/crubside/ticket-id-popup/ticket-id-popup.component';
 import { RespondPopupComponent } from './tablet-rest/crubside/respond-popup/respond-popup.component';
 import { RespondSuccessComponent } from './tablet-rest/crubside/respond-popup/respond-success/respond-success.component';
+import { FeedbackComponent } from './tablet-rest/feedback/feedback.component';
+import { BroadcastComponent } from './tablet-rest/broadcast/broadcast.component';
+import { StoreManageComponent } from './tablet-rest/store-manage/store-manage.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +67,10 @@ import { RespondSuccessComponent } from './tablet-rest/crubside/respond-popup/re
     CrubsideComponent,
     TicketIdPopupComponent,
     RespondPopupComponent,
-    RespondSuccessComponent
+    RespondSuccessComponent,
+    FeedbackComponent,
+    BroadcastComponent,
+    StoreManageComponent
 
   ],
   imports: [

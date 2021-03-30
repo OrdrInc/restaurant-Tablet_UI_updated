@@ -1,0 +1,19 @@
+.border-button-box{
+    border-top: 1px solid black;
+    height: 60px;
+}
+.bR8{
+    border-radius: 8px;
+}
+.f-16{
+    font-size: 16px;
+}
+.green-bg{
+    background-color: #3fab59;
+}
+.yellow-bg{
+    background-color: goldenrod!important;
+}
+.maroon-bg{
+   background-color:firebrick!important;
+}

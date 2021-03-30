@@ -1,3 +1,28 @@
+<div *ngIf="buttonsFlag" id="footer">
+  <footer  class="footer w100 {{landscape?'landscape-footer':'portrait-footer'}} " style="bottom: 50px!important;">
+ <div class="white-bg white-c border-button-box" >
+ <div class="col-sm-12 text-center">
+  <button type="button" (click)="goTo('feedback')" *ngIf="curPage!='fb'" class="btn yellow-bg br8 f-16">
+    Feedback &nbsp; <span *ngIf="service.feedbackBadgeCount>0" class="badge badge-light br8 f-16">{{service.feedbackBadgeCount}}</span>
+  </button>
+  <button type="button" (click)="goTo('broadcast')" *ngIf="curPage!='broadcast'" class="btn green-bg br8 f-16">
+    Broadcast  &nbsp; <span *ngIf="service.broadcastBadgeCount>0" class="badge badge-light br8 f-16">{{service.broadcastBadgeCount}}</span>
+  </button>
+  <button *ngIf="curPage!='curbside'" (click)="goTo('curbside')" type="button" class="btn black-bg br8 f-16">
+    Curbside  &nbsp; <span *ngIf="service.curbsideBadgeCount>0" class="badge badge-light br8 f-16">{{service.curbsideBadgeCount}}</span>
+  </button>
+  <button *ngIf="curPage!='rest'" (click)="goTo('rest')" type="button" class="btn maroon-bg br8 f-16">
+    Text POS 
+  </button>
+  <button type="button" *ngIf="curPage!='manage'" (click)="goTo('manage')" class="btn btn-primary br8 f-16">
+    Store Manage 
+  </button>
+ </div>
+ </div>
+  </footer>
+</div>
+
+
 <div *ngIf="!landscape" id="footer">
   <footer *ngIf="!orderFlow" class="footer w100 {{landscape?'landscape-footer':'portrait-footer'}}">
     <div class="black-bg pad-10">

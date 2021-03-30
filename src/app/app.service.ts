@@ -18,7 +18,11 @@ export class AppService {
     server3 = "";
     prodserver = "https://www.tutalec.com";
     serverused: any;
-    ticketid:any
+    ticketid:any;
+    feedbackBadgeCount=1;
+    broadcastBadgeCount=1;
+    curbsideBadgeCount=1;
+
 
     constructor(private http: Http, private options: RequestOptions) {
         this.options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) });
