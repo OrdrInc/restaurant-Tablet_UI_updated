@@ -1,0 +1,121 @@
+
+<mat-dialog-content>
+  
+  <h4 *ngIf="data.isPauseStore" class = "title" style = "text-align: center; font-weight: bold; font-size: 20px;"> {{api.resturantName}}</h4>
+  <hr style = "margin: 2px;">
+
+ <div *ngIf = "data.items"> 
+    <h4 class = "title" style = "font-weight: bold; font-size: 14px;"> INFO: <ul>
+        <li>Checked Item - In Stock</li>
+        <li>Unchecked Item - Out of Stock </li>
+      </ul></h4>
+      <h4 class = "title" style = "font-size: 16px;"> Uncheck item to make it <b>out of stock </b>in the selected store and vice versa. </h4>
+
+  <div class="row">
+  <div *ngFor = "let category of data.data; index as i" class="col-sm-4">
+  <p class="cat-name">{{category.categoryName}}</p>
+  <p *ngFor="let items of category.itemsList" >
+   
+    <mat-checkbox [(ngModel)]="items.avalibility"
+    color="primary"
+    (ngModelChange)="updateList(items)">
+</mat-checkbox> &nbsp; {{items.displayName}}
+  </p>
+  </div>
+  </div>
+ </div>
+ <div *ngIf = "data.modifiers"> 
+  <h4 class = "title" style = "font-weight: bold; font-size: 14px;"> INFO: <ul>
+      <li>Checked Item - In Stock</li>
+      <li>Unchecked Item - Out of Stock </li>
+    </ul></h4>
+    <h4 class = "title" style = "font-size: 16px;"> Uncheck item to make it <b>out of stock </b>in the selected store and vice versa. </h4>
+<div class="row">
+<div *ngFor = "let category of data.data; index as i" class="col-sm-4">
+<p class="cat-name">{{category.categoryName}}</p>
+<p *ngFor="let items of category.items" >
+
+<mat-checkbox [(ngModel)]="items.avalibility"
+color="primary"
+(ngModelChange)="updateModifiers(items)">
+</mat-checkbox> &nbsp; {{items.displayName}}
+</p>
+</div>
+</div>
+</div>
+<div *ngIf="data.storehours">
+  <div>
+    <h4 class = "title f-22 bold text-center"> Store Hours: </h4>
+    <textarea
+          autofocus
+          value
+          readonly
+          id = "user-txt"
+          placeholder="Add store specific notes"
+          class="form-control rounded-0 user-msg animated bounceIn "
+          type = "text user-text-box"
+          id="exampleFormControlTextarea2"
+          rows="4"
+          [(ngModel)] = "data.data.hoursText"> </textarea>
+  
+  </div>
+</div>
+<div style="width: 50%;margin:auto" *ngIf="data.storeoperation">
+  <div *ngFor = "let radio of data.data.textArr; index as i" style = "padding-bottom: 10px;">
+    <div *ngIf="radio.db=='cb_maxOrder' || radio.db=='cb_atStoreLim' ||  radio.db=='cb_atDoorLim'||
+    radio.db=='cb_minTotalForDelivery' || radio.db=='etaRange.delivery' ||  radio.db=='etaRange.pickup'
+     || radio.db=='storeHours_json.zone' || radio.db=='delFee'"> 
+    <span  *ngIf = "radio.type === 'text'">
+       <h4 class = "title"><span [ngStyle] = "{color : showBtn===i ? '#dc143c' : '#000000' }"> {{radio.item}} </span>
+          <span *ngIf = "!isEdit" (click) = "onEdit(i)" class = "title edit-text"><i>edit</i></span></h4>
+       <input
+       [readonly]="showBtn!==i"
+       [(ngModel)] = "radio.response"
+       type = "text"
+       class = "form-control"
+       >
+     </span>
+     <div  *ngIf = "showBtn===i" class ="wrapper" style ="padding:  7px;">
+     <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i"  style = "padding: 5px;">
+       <button class="btn "   (click) = "editItem(radio)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold;"> Update</button>  
+     </div>
+     <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i" style = "padding: 5px;"> 
+     <button class="btn"   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold;"> Cancel </button>  
+     </div>
+   </div></div>
+ </div>
+ <div *ngFor = "let zone of data.data.zoneDeliveryFee.response; index as k;trackBy:trackByFn">
+  <h4 class = "title"><span [ngStyle] = "{color : showBtnZone===k ? '#dc143c' : '#000000' }"> {{data.data.zoneDeliveryFee.item}}-{{k+1}} </span>
+    <span *ngIf = "!isEdit" (click) = "onEditZone(k)" class = "title edit-text"><i>edit</i></span></h4>
+    <input
+    [readonly]="showBtnZone!==k"
+    [(ngModel)] = "data.data.zoneDeliveryFee.response[k]"
+    type = "text"
+    class = "form-control"
+   >
+   <div  *ngIf = "showBtnZone===k" class ="wrapper" style ="padding:  7px;">
+      <div [attr.id]="'undoBtn'+k" *ngIf="showBtnZone===k"  style = "padding: 5px;">
+        <button class="btn "   (click) = "editItem(data.data.zoneDeliveryFee, k)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold;"> Update</button>  
+      </div>
+      <div [attr.id]="'undoBtn'+k" *ngIf="showBtnZone===k" style = "padding: 5px;"> 
+      <button class="btn "   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold"> Cancel </button>  
+      </div>
+    </div>
+
+</div>
+  <div>
+   
+  
+  </div>
+</div>
+
+ 
+</mat-dialog-content>
+<div class="text-center">
+<mat-dialog-actions class = "close-btn" style="display: unset;">
+ 
+  <button mat-raised-button color="primary" (click) = "close()"> Close </button>
+  <button *ngIf="data.items" mat-raised-button color="primary" (click) = "onItemsChange()" > save </button>
+  <button *ngIf="data.modifiers" mat-raised-button color="primary" (click) = "onModChange()" > save </button>
+</mat-dialog-actions>` 
+</div>

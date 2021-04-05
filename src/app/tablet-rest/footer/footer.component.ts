@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input,ViewChild} from "@angular/core";
 import { Router } from "@angular/router";
 import { AppService } from './../../app.service';
 @Component({
@@ -13,6 +13,7 @@ export class FooterComponent implements OnInit {
   buttonsFlag = true;
   curPage = "";
   res;
+  @ViewChild('boxhight') targetElement: any; 
   constructor(private router: Router,private service: AppService) {}
 
   ngOnInit() {
@@ -21,6 +22,8 @@ export class FooterComponent implements OnInit {
     this.curPage = this.res[1];
     var date = new Date();
     this.year = date.getFullYear();
+    const height = this.targetElement.nativeElement.offsetHeight;
+    alert(height);
   }
   goTo(page) {
     if (page == "feedback") {

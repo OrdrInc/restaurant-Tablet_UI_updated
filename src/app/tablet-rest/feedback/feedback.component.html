@@ -2,6 +2,76 @@
   <nav class="navbar pT15 pL25 pad-10 black-bg">
     <span class="white-c f-23 bold lwSpace">{{ resturantName }} 
     </span>
+    <span class="fRight mR20 bold lwSpace white-c f-23"
+    > <i class="fa fa-refresh mR10 " (click)="refresh()" style="font-size:30px" aria-hidden="true"></i> Today's Feedback
+    <span style="font-size: 25px;" class="badge badge-danger bR20">{{ feedbackcount }}</span></span
+  >
   </nav>
+</div>
+<div class="flex-container text-center" *ngIf="loading">
+  <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
+</div>
+<div *ngIf="!loading" >
+  <div class="text-center mT50 " *ngIf="displayData.length==0">
+    <img width="30%" src="assets/img/Feedback.gif">
+  </div>
+  <table *ngIf="displayData.length!=0" class="table item-center" align="center">
+    <tbody style="color: black" class="">
+      <tr style="border:2px solid black;" *ngFor="let row of displayData" class="{{row.verified?'grey-c grey-bg':''}}">
+        <th
+          style="width: 10%"
+          class="pB0"
+          style="font-weight: bold; padding-left: 20px"
+        >
+          <span (click)="changeticketId(row)" class="f-30">
+            <div class="f-20" >{{ row.date}}</div>
+      
+          </span>
+          <p class="mT7" style="font-size: 2.2vw;">{{row.time}}</p>
+        </th>
+  
+        <th style="width: 25%" class="pB0">
+          <p class="f-25 bold mB0">{{row.name }}</p>
+        
+          <p class="f-25 bold mB0">{{ formatPhone(row.phoneno) }}</p>
+        </th>
+        <th style="font-size: 1.6vw; width: 35%">
+          <span style="float: left; padding-top: 10px">{{ row.feedback }}</span>
+        </th>
+        <th class="text-center" style="font-size: 1.6vw; width: 10%">
+          <p class="mT10 f-40 bold">{{ row.ratingvalue }}</p>
+        </th>
+        <th style="width: 10%">
+          <button (click)="done(row,'done')" *ngIf="!row.verified"
+            style="
+             font-size: 1.8vw;
+              font-weight: bold;
+              border-radius: 8px;
+              background-color: #3fab59;
+            "
+            class="btn white-c"
+          >
+           DONE
+           
+          </button>
+          <button *ngIf="row.verified"
+          (click)="done(row,'undone')"
+          style="
+           font-size: 1.8vw;
+            font-weight: bold;
+            border-radius: 8px;
+            background-color: grey;
+          "
+          class="btn white-c"
+        >
+         UNDO
+         
+        </button>
+        </th>
+      
+      </tr>
+    </tbody>
+  </table>
+  <div style="height: 150px;">&nbsp;</div>
 </div>
 <app-footer></app-footer>

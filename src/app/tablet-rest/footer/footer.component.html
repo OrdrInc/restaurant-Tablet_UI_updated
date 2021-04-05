@@ -1,22 +1,29 @@
 <div *ngIf="buttonsFlag" id="footer">
   <footer  class="footer w100 {{landscape?'landscape-footer':'portrait-footer'}} " style="bottom: 50px!important;">
- <div class="white-bg white-c border-button-box" >
- <div class="col-sm-12 text-center">
-  <button type="button" (click)="goTo('feedback')" *ngIf="curPage!='fb'" class="btn yellow-bg br8 f-16">
-    Feedback &nbsp; <span *ngIf="service.feedbackBadgeCount>0" class="badge badge-light br8 f-16">{{service.feedbackBadgeCount}}</span>
-  </button>
-  <button type="button" (click)="goTo('broadcast')" *ngIf="curPage!='broadcast'" class="btn green-bg br8 f-16">
-    Broadcast  &nbsp; <span *ngIf="service.broadcastBadgeCount>0" class="badge badge-light br8 f-16">{{service.broadcastBadgeCount}}</span>
-  </button>
-  <button *ngIf="curPage!='curbside'" (click)="goTo('curbside')" type="button" class="btn black-bg br8 f-16">
-    Curbside  &nbsp; <span *ngIf="service.curbsideBadgeCount>0" class="badge badge-light br8 f-16">{{service.curbsideBadgeCount}}</span>
-  </button>
-  <button *ngIf="curPage!='rest'" (click)="goTo('rest')" type="button" class="btn maroon-bg br8 f-16">
-    Text POS 
-  </button>
-  <button type="button" *ngIf="curPage!='manage'" (click)="goTo('manage')" class="btn btn-primary br8 f-16">
-    Store Manage 
-  </button>
+ <div class="black-bg border-button-box" >
+ <div #boxhight class="col-sm-12 text-center mT10">
+  
+  <span (click)="goTo('broadcast')"  class="{{curPage=='broadcast'?'f-24 white-c':'f-22 grey-c'}}   bold col-sm-2 bR2 ">
+    <i  *ngIf="curPage=='broadcast'"  class="fa fa-caret-up f-22 caret-disp" aria-hidden="true"></i>
+    <span *ngIf="curPage!='broadcast'"  >&nbsp;&nbsp;</span>    BROADCAST &nbsp; <span *ngIf="service.broadcastBadgeCount>0" class="badge badge-new badge-light br8 f-16">{{service.broadcastBadgeCount}}</span> 
+  </span>
+  <span  (click)="goTo('curbside')"  class="{{curPage=='curbside'?'f-24 white-c':'f-22 grey-c'}}   bold col-sm-2 bR2 ">
+    <i *ngIf="curPage=='curbside'"  class="fa fa-caret-up f-22 caret-disp" aria-hidden="true"></i>
+    <span *ngIf="curPage!='curbside'"  >&nbsp;&nbsp;</span>    CURBSIDE  &nbsp; <span *ngIf="service.curbsideBadgeCount>0" class="badge badge-new badge-light br8 f-16">{{service.curbsideBadgeCount}}</span>  
+  </span>
+  <span  (click)="goTo('feedback')" class="{{curPage=='fb'?'f-24 white-c':'f-22 grey-c'}}   bold col-sm-2 bR2 ">
+    <i *ngIf="curPage=='fb'" class="fa fa-caret-up f-22 caret-disp" aria-hidden="true"></i>
+    <span *ngIf="curPage!='fb'"  >&nbsp;&nbsp;</span>   FEEDBACK &nbsp; <span *ngIf="service.feedbackBadgeCount>0" class="badge badge-new badge-light br8 f-16">{{service.feedbackBadgeCount}}</span>
+  </span>
+  <span  (click)="goTo('manage')" class="{{curPage=='manage'?'f-24 white-c':'f-22 grey-c'}}   bold col-sm-2 bR2 ">
+    <i *ngIf="curPage=='manage'"  class="fa fa-caret-up f-22 caret-disp" style="left:8%!important" aria-hidden="true"></i>
+    <span *ngIf="curPage!='manage'"  >&nbsp;&nbsp;</span>   STORE MANAGE &nbsp;
+  </span>
+  <span  (click)="goTo('rest')" class="{{curPage=='rest'?'f-24 white-c':'f-22 grey-c'}}   bold col-sm-2 bR2 ">
+    <i *ngIf="curPage=='rest'"  class="fa fa-caret-up f-22 caret-disp" aria-hidden="true"></i>
+    <span *ngIf="curPage!='rest'"  >&nbsp;&nbsp;</span>  TEXT POS &nbsp; 
+  </span>
+  
  </div>
  </div>
   </footer>

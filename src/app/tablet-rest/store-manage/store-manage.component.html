@@ -4,22 +4,75 @@
     </span>
   </nav>
 </div>
-<div class="text-center mB20">
-<div class="box black-bg">
-  <p class="mT32">Out/In Stock</p>
+<div class="flex-container text-center" *ngIf="loading">
+  <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
 </div>
-<div class="box green-bg">
+<div *ngIf="!loading" class="text-center mB20">
+  <div *ngIf="!pinVerified">
+    <div class="modal-body col-sm-5 mT50" style="margin:auto">
+      <div *ngIf="pinAttempt >0 && pinAttempt <= 3" class="alert alert-danger" role="alert">
+          Wrong Pin. Attempts {{this.pinAttempt}} of 3.
+      </div>
+      <div *ngIf="pinAttempt >3" class="alert alert-danger" role="alert">
+          You have entered Wrong Pin 3 times. Call (415) 903-4020 for support.
+      </div>
+      <div *ngIf="storePinlengthMessage" class="alert alert-danger" role="alert">
+          Please enter a valid 4 Digit PIN
+      </div>
+      <div>
+
+          <strong>
+              <h5 class="bold f-23">Enter Your Store PIN (4-Digit) to Access Store:</h5>
+          </strong>
+          <div class="col-auto w70 pL0 margin-auto pT10">
+
+              <div class="input-group mb-2">
+
+                  <input style="height:45px" appAutoFocus maxlength="4" onKeyPress="if(this.value.length==4) return false;" type="number" [(ngModel)]="storePIN"
+                      class="form-control" id="storepinn" placeholder="PIN">
+
+              </div>
+          </div>
+          <div class="">
+              <a  (click)="extendPin()"
+                  class="btn  btn-success  mT30 f-22">Submit</a>
+             
+          </div>
+      </div>
+  </div>
+  </div>
+  <div *ngIf="pinVerified">
+<div (click)="items()" class="box bg-primary">
+  <p class="mT32">Items</p>
+</div>
+<div (click)="modifiers()" class="box bg-secondary">
+  <p class="mT32">Modifiers</p>
+</div>
+<div (click)="storeOperation()" class="box bg-success">
   <p class="mT32">Store Operation</p>
 </div>
-<div class="box yellow-bg">
-  <p class="mT32">Test Store</p>
-</div>
+
 <div class="clearfix"></div>
 <div class="box maroon-bg">
-  <p class="mT32">Pause/Resume</p>
+  <p class="mT32">Test Store</p>
 </div>
-<div class="box btn-primary">
+<div class="box bg-info " (click)="textOrders()">
+  <p class="mT32">
+    <span *ngIf="storedata.actionBtnArr[0].item=='Resume Store'">Resume Text Orders</span>
+    <span *ngIf="storedata.actionBtnArr[0].item=='Pause Store'">Pause Text Orders</span>
+  </p>
+</div>
+<div class="box bg-dark" (click)="deliveryOrders()">
+  <p class="mT32">
+    <span *ngIf="storedata.actionBtnArr[1].item=='Resume Delivery'">Resume Delivery Orders</span>
+    <span *ngIf="storedata.actionBtnArr[1].item=='Pause Delivery'">Pause Delivery Orders</span>
+  </p>
+</div>
+<div class="clearfix"></div>
+<div (click)="storeHours()" class="box yellow-bg">
   <p class="mT32">Store Hours</p>
+</div>
+
 </div>
 </div>
 <app-footer></app-footer>

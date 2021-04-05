@@ -19,9 +19,9 @@ export class AppService {
     prodserver = "https://www.tutalec.com";
     serverused: any;
     ticketid:any;
-    feedbackBadgeCount=1;
-    broadcastBadgeCount=1;
-    curbsideBadgeCount=1;
+    feedbackBadgeCount=0;
+    broadcastBadgeCount=0;
+    curbsideBadgeCount=0;
 
 
     constructor(private http: Http, private options: RequestOptions) {
@@ -41,6 +41,7 @@ export class AppService {
             .catch(this.handleError);
 
     }
+    
     getAllOrders(restid, date) {
         console.log("Get all Orders");
         let Url = this.serverused + "/getAllOrders";
