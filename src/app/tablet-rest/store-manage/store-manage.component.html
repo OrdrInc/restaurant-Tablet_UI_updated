@@ -28,51 +28,59 @@
 
               <div class="input-group mb-2">
 
-                  <input style="height:45px" appAutoFocus maxlength="4" onKeyPress="if(this.value.length==4) return false;" type="number" [(ngModel)]="storePIN"
+                  <input style="height:45px" appAutoFocus maxlength="4" onKeyPress="if(this.value.length==4) return false;" type="tel" [(ngModel)]="storePIN"
                       class="form-control" id="storepinn" placeholder="PIN">
 
               </div>
           </div>
           <div class="">
               <a  (click)="extendPin()"
-                  class="btn  btn-success  mT30 f-22">Submit</a>
+                  class="btn   mT30 f-20 bold bR8 pad-10 {{storePinString(storePIN).length==4?' btn-success':'disabled'}}">Submit</a>
              
           </div>
       </div>
   </div>
   </div>
+  
   <div *ngIf="pinVerified">
+    <div class="box  {{storedata.actionBtnArr[0].item=='Resume Store' ? 'bg-success':'maroon-bg'}} " (click)="textOrders()">
+      <p class="mT32">
+        <span *ngIf="storedata.actionBtnArr[0].item=='Resume Store'">Resume Text Orders</span>
+        <span *ngIf="storedata.actionBtnArr[0].item=='Pause Store'">Pause Text Orders</span>
+      </p>
+    </div>
+    <div (click)="storeOperation()" class="box bg-dark">
+      <p class="mT32">Store Operation</p>
+    </div>
 <div (click)="items()" class="box bg-primary">
   <p class="mT32">Items</p>
 </div>
-<div (click)="modifiers()" class="box bg-secondary">
-  <p class="mT32">Modifiers</p>
-</div>
-<div (click)="storeOperation()" class="box bg-success">
-  <p class="mT32">Store Operation</p>
-</div>
-
 <div class="clearfix"></div>
-<div class="box maroon-bg">
-  <p class="mT32">Test Store</p>
-</div>
-<div class="box bg-info " (click)="textOrders()">
-  <p class="mT32">
-    <span *ngIf="storedata.actionBtnArr[0].item=='Resume Store'">Resume Text Orders</span>
-    <span *ngIf="storedata.actionBtnArr[0].item=='Pause Store'">Pause Text Orders</span>
-  </p>
-</div>
-<div class="box bg-dark" (click)="deliveryOrders()">
+<div class="box  {{storedata.actionBtnArr[1].item=='Resume Delivery' ? 'bg-success':'maroon-bg'}}" (click)="deliveryOrders()">
   <p class="mT32">
     <span *ngIf="storedata.actionBtnArr[1].item=='Resume Delivery'">Resume Delivery Orders</span>
     <span *ngIf="storedata.actionBtnArr[1].item=='Pause Delivery'">Pause Delivery Orders</span>
   </p>
 </div>
-<div class="clearfix"></div>
 <div (click)="storeHours()" class="box yellow-bg">
   <p class="mT32">Store Hours</p>
 </div>
+<div (click)="modifiers()" class="box bg-secondary">
+  <p class="mT32">Modifiers</p>
+</div>
+
+
+<div class="clearfix"></div>
+<div (click)="testStore()" class="box bg-primary">
+  <p class="mT32">Test Store</p>
+</div>
+
+
+<div class="clearfix"></div>
+
 
 </div>
 </div>
 <app-footer></app-footer>
+<app-text-popup ></app-text-popup>
+<app-delivery-popup></app-delivery-popup>

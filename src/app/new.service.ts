@@ -20,6 +20,8 @@ export class NewService {
  private postStock = new Subject<any>();
  private updateManage = new Subject<any>();
  private pauseData = new Subject<any>();
+ private postTestOrdr = new Subject<any>();
+ private ipData = new Subject<any>();
   constructor(private http: HttpClient) {
 
   }
@@ -34,6 +36,43 @@ export class NewService {
   }
   getPause() {
     return this.pauseData.asObservable();
+  }
+  getTestorder() {
+    return this.postTestOrdr.asObservable();
+  }
+  getIP() {
+    return this.ipData.asObservable();
+  }
+  
+  cpRemoveStoreHours(rid, dbkey) {
+    const cpRemoveHours = JSON.stringify({ 'restId': rid, 'dbkey': dbkey });
+    const localAddress = `${this.address}removeStoreHours`;
+    this.http.post<any>(localAddress, cpRemoveHours, httpOptions)
+      .subscribe(data => console.log());
+  }
+  cpAddStoreHours(rid, dbkey, dbVal) {
+    const cpAddHours = JSON.stringify({ 'restId': rid, 'dbkey': dbkey, 'dbVal': dbVal });
+    const localAddress = `${this.address}addStoreHours`;
+    this.http.post<any>(localAddress, cpAddHours, httpOptions)
+      .subscribe(data => console.log());
+  }
+  checkIPV1(ip) {
+    const cpIPPacket = JSON.stringify({ ip: ip });
+    const localAddress = `${this.address}checkIPv1`;
+    this.http.post<any>(localAddress, cpIPPacket, httpOptions)
+      .subscribe((data) => {
+        this.ipData.next(data);
+      });
+  }
+  testOrder(rid, testCase, actionItem) {
+    const testPacket = JSON.stringify({ restId: rid, custText: testCase, actionItem: actionItem });
+   // console.log(testPacket);
+    const localAddress = `${this.address}testOrder`;
+    this.http.post<any>(localAddress, testPacket, httpOptions)
+      .subscribe((data) => {
+       // console.log(data);
+        this.postTestOrdr.next(data);
+      });
   }
   PauseStore(rid) {
     const cpPausePacket = JSON.stringify({ restId: rid, });

@@ -53,7 +53,10 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatTableModule } from "@angular/material/table";
 import { MatDialogModule } from "@angular/material/dialog";
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TextPopupComponent } from './tablet-rest/store-manage/text-popup/text-popup.component';
+import { DeliveryPopupComponent } from './tablet-rest/store-manage/delivery-popup/delivery-popup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,6 +91,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FeedbackComponent,
     BroadcastComponent,
     StoreManageComponent,
+    TextPopupComponent,
+    DeliveryPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,6 +105,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatSelectModule,
     MatTableModule,
+    MatRadioModule,
     MatCheckboxModule,
     MatDividerModule,
     MatGridListModule,

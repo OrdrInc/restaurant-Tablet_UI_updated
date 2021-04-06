@@ -3,6 +3,8 @@ import { AppService } from './../../app.service';
 import { NewService } from './../../new.service';
 import { MatDialog } from '@angular/material/dialog';
 import {StoreManageDialogComponent} from './store-manage-dialog/store-manage-dialog.component'
+import { unescapeHtml } from '@angular/platform-browser/src/browser/transfer_state';
+declare var $: any;
 @Component({
   selector: 'app-store-manage',
   templateUrl: './store-manage.component.html',
@@ -14,10 +16,11 @@ export class StoreManageComponent implements OnInit {
   loading=false;
   pinVerified=false;
   storePinlengthMessage=false;
-  storePIN;
+  storePIN= ''
   pinAttempt=0;
   sid="mid26";
   storedata;
+  textOrderVariable='';
   deliveryObjPause = {
     'db' : 'cb_minTotalForDelivery',
     'item': 'Delivery Min ($)',
@@ -47,6 +50,10 @@ export class StoreManageComponent implements OnInit {
               console.log(error);
           }
           });
+  }
+  storePinString(data){
+   data=data.toString();
+   return data;
   }
   extendPin() {
     this.storePinlengthMessage = false;
@@ -92,18 +99,32 @@ loadData() {
 }
 async textOrders(){
   this.loading=true;
+  $('#textpopupPaused').modal('hide');
+  $('#textpopupResumed').modal('hide'); 
    this.api.PauseStore("+1"+this.id);
    let pause= this.api.getPause()
   .subscribe((x) => {
     pause.unsubscribe();
+    if(this.storedata.actionBtnArr[0].item=='Resume Store'){ 
+      $('#textpopupResumed').modal('show');
+    }
+    else{
+      $('#textpopupPaused').modal('show'); 
+    }
     this.loadData();
+   
+    
   })
 }
 deliveryOrders(){
+  $('#deliverypopupPaused').modal('hide');
+  $('#deliverypopupResumed').modal('hide');
   if (this.storedata.actionBtnArr[1].item === 'Resume Delivery') {
+    $('#deliverypopupResumed').modal('show');
   this.updateKey(this.deliveryObjResume);
   }
   if (this.storedata.actionBtnArr[1].item === 'Pause Delivery') {
+    $('#deliverypopupPaused').modal('show');
   this.updateKey(this.deliveryObjPause);
   }
 }
@@ -175,10 +196,20 @@ storeOperation(){
   }
   this.openDialog(data);
 }
+testStore(){
+  var data= {
+    testStore: true,
+    data:this.storedata,
+    id:"+1"+this.id
+  }
+  this.openDialog(data);
+}
 openDialog(Arg) {
   this.dialog.closeAll();
   const dialogRef = this.dialog.open(StoreManageDialogComponent, {
     width: '99%',
+    height:'100%',
+    maxWidth:'unset',
     data: Arg
   });
 dialogRef.afterClosed().subscribe(result => {

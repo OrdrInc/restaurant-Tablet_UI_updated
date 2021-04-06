@@ -58,7 +58,7 @@ data=[
               
               this.resturantName = data[0].friendlyName;
              // data[0].storeDate
-              this.getAlldata(data[0].restId,"2021-03-30")
+              this.getAlldata(data[0].restId,data[0].storeDate)
           error => {
             
               console.log(error);

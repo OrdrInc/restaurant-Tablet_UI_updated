@@ -1,7 +1,7 @@
 
-<mat-dialog-content>
+<mat-dialog-content style="max-height:unset!important">
   
-  <h4 *ngIf="data.isPauseStore" class = "title" style = "text-align: center; font-weight: bold; font-size: 20px;"> {{api.resturantName}}</h4>
+  <h4  class = "title" style = "text-align: center; font-weight: bold; font-size: 20px;"> {{api.resturantName}}</h4>
   <hr style = "margin: 2px;">
 
  <div *ngIf = "data.items"> 
@@ -43,51 +43,138 @@ color="primary"
 </div>
 </div>
 </div>
-<div *ngIf="data.storehours">
-  <div>
-    <h4 class = "title f-22 bold text-center"> Store Hours: </h4>
+<div class="row" *ngIf="data.storehours">
+  <div  class="mT20  col-sm-6">
+  <div  *ngFor = "let day of data.data.storeHours; index as i">
+    <div style = "padding-right:4px; flex-shrink: 0">
+        <h4 class = "title"><span [ngStyle] = "{color : showBtn===i ? '#dc143c' : '#000000' }"> {{day.item}}</span> <span *ngIf = "!isEdit" class = "title edit-text" (click) = "add(day, i)"><i>add</i></span>  <span *ngIf = "!isEdit" class = "title edit-text" (click) = "remove(day, i)"><i>remove</i></span></h4></div>
+        <div *ngIf = "day.close_0 !== '*'" style = "display: flex; justify-content: flex-start; align-content: space-between; padding-bottom: 7px;">
+          <div  style = "flex-basis: 40%; padding-right: 6px;">
+            <input
+            [readonly]="showBtnCol1!==i"
+            [(ngModel)] = "day.open_0"
+            type = "text"
+            class = "form-control"
+            >
+          </div>
+          <div style = "flex-basis: 40%; padding-left: 6px;">
+            <input
+            [readonly]="showBtnCol1!==i"
+            [(ngModel)] = "day.close_0"
+            type = "text"
+            class = "form-control"
+            >
+          </div>
+          <div style = "padding:4px;">
+            <span *ngIf = "!isEdit" (click) = "onEdit_col1(i)" class = "title edit-text"><i>edit</i></span>
+          </div>
+        </div>
+    
+    
+        <div style = "display: flex; justify-content: flex-start; align-content: space-between; padding-bottom: 7px;">
+      <div  style = "flex-basis:40%; padding-right: 6px;">
+        <input
+        [readonly]="showBtnCol1!==i"
+        [(ngModel)] = "day.open"
+        type = "text"
+        class = "form-control"
+        >
+      </div>
+      <div style = "flex-basis:40%; padding-left: 6px;">
+        <input
+        [readonly]="showBtnCol1!==i"
+        [(ngModel)] = "day.close"
+        type = "text"
+        class = "form-control"
+        >
+      </div>
+      <div style = "padding:4px;">
+        <span *ngIf = "!isEdit" (click) = "onEdit_col1(i)" class = "title edit-text"><i>edit</i></span>
+      </div>
+    </div>
+    
+    <div  *ngIf = "showBtnCol1===i" class ="wrapper" style ="padding:  7px;width: 50%; justify-content: center;">
+      <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol1===i"  style = "padding: 5px;">
+        <button class="btn "   (click) = "editItem(day)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;font-weight: bold;padding:10px;border-radius: 8px;"> Update</button>  
+      </div>
+      <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol1===i" style = "padding: 5px;"> 
+      <button class="btn"   (click) = "cancelEdit1(day, i)" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;font-weight: bold;padding:10px;border-radius: 8px;"> Cancel </button>  
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="col-sm-6 mT20">
+    <span  *ngFor = "let radio of data.data.textArr; index as i"   >
+      <div class="" style="padding-bottom: 10px;"  *ngIf="radio.db=='openAdjustTime' || radio.db=='closeAdjustTime'"> 
+      <span  *ngIf = "radio.type === 'text'">
+         <h4 class = "title"><i class="fa fa-info-circle f-20" style="color:#31afd5" (click)="info(i)" aria-hidden="true"></i><span [ngStyle] = "{color : showBtn===i ? '#dc143c' : '#000000' }"> {{radio.item}} </span>
+            <span *ngIf = "!isEdit" (click) = "onEdit(i)" class = "title edit-text"><i>edit</i></span></h4>
+         <input
+         style="width: 95%;"
+         [readonly]="showBtn!==i"
+         [(ngModel)] = "radio.response"
+         type = "text"
+         class = "form-control"
+         >
+       </span>
+       <span *ngIf="infoBtn==i" class="f-18">This is a sample text</span>
+       <div  *ngIf = "showBtn===i" class ="wrapper" style ="padding:  7px;">
+       <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i"  style = "padding: 5px;">
+         <button class="btn "   (click) = "editItem(radio)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold;"> Update</button>  
+       </div>
+       <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i" style = "padding: 5px;"> 
+       <button class="btn"   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold;"> Cancel </button>  
+       </div>
+     </div></div>
+    </span>
+    <h4 class = "title f-22 bold "> Store Hours: </h4>
     <textarea
           autofocus
           value
           readonly
           id = "user-txt"
           placeholder="Add store specific notes"
-          class="form-control rounded-0 user-msg animated bounceIn "
+          class="form-control rounded-0 user-msg animated bounceIn bold "
           type = "text user-text-box"
           id="exampleFormControlTextarea2"
-          rows="4"
+          rows="8"
           [(ngModel)] = "data.data.hoursText"> </textarea>
   
   </div>
 </div>
-<div style="width: 50%;margin:auto" *ngIf="data.storeoperation">
-  <div *ngFor = "let radio of data.data.textArr; index as i" style = "padding-bottom: 10px;">
-    <div *ngIf="radio.db=='cb_maxOrder' || radio.db=='cb_atStoreLim' ||  radio.db=='cb_atDoorLim'||
-    radio.db=='cb_minTotalForDelivery' || radio.db=='etaRange.delivery' ||  radio.db=='etaRange.pickup'
-     || radio.db=='storeHours_json.zone' || radio.db=='delFee'"> 
-    <span  *ngIf = "radio.type === 'text'">
-       <h4 class = "title"><span [ngStyle] = "{color : showBtn===i ? '#dc143c' : '#000000' }"> {{radio.item}} </span>
-          <span *ngIf = "!isEdit" (click) = "onEdit(i)" class = "title edit-text"><i>edit</i></span></h4>
-       <input
-       [readonly]="showBtn!==i"
-       [(ngModel)] = "radio.response"
-       type = "text"
-       class = "form-control"
-       >
-     </span>
-     <div  *ngIf = "showBtn===i" class ="wrapper" style ="padding:  7px;">
-     <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i"  style = "padding: 5px;">
-       <button class="btn "   (click) = "editItem(radio)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold;"> Update</button>  
-     </div>
-     <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i" style = "padding: 5px;"> 
-     <button class="btn"   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold;"> Cancel </button>  
-     </div>
-   </div></div>
- </div>
- <div *ngFor = "let zone of data.data.zoneDeliveryFee.response; index as k;trackBy:trackByFn">
+<div  *ngIf="data.storeoperation">
+  <div class="width:100% margin:auto">
+    <span  *ngFor = "let radio of data.data.textArr; index as i"   >
+      <div class="col-sm-6" style="padding-bottom: 10px;display: inline-block;"  *ngIf="radio.db=='cb_maxOrder' || radio.db=='cb_atStoreLim' ||  radio.db=='cb_atDoorLim'||
+      radio.db=='cb_minTotalForDelivery' || radio.db=='etaRange.delivery' ||  radio.db=='etaRange.pickup'
+       || radio.db=='storeHours_json.zone' || radio.db=='delFee'"> 
+      <span  *ngIf = "radio.type === 'text'">
+         <h4 class = "title"><span [ngStyle] = "{color : showBtn===i ? '#dc143c' : '#000000' }"> {{radio.item}} </span>
+            <span *ngIf = "!isEdit" (click) = "onEdit(i)" class = "title edit-text"><i>edit</i></span></h4>
+         <input
+         style="width: 95%;"
+         [readonly]="showBtn!==i"
+         [(ngModel)] = "radio.response"
+         type = "text"
+         class = "form-control"
+         >
+       </span>
+       <div  *ngIf = "showBtn===i" class ="wrapper" style ="padding:  7px;">
+       <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i"  style = "padding: 5px;">
+         <button class="btn "   (click) = "editItem(radio)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold;"> Update</button>  
+       </div>
+       <div [attr.id]="'undoBtn'+i" *ngIf="showBtn===i" style = "padding: 5px;"> 
+       <button class="btn"   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold;"> Cancel </button>  
+       </div>
+     </div></div>
+    </span>
+  </div>
+ 
+ <div class="col-sm-6" style="display: inline-block;" *ngFor = "let zone of data.data.zoneDeliveryFee.response; index as k;trackBy:trackByFn">
   <h4 class = "title"><span [ngStyle] = "{color : showBtnZone===k ? '#dc143c' : '#000000' }"> {{data.data.zoneDeliveryFee.item}}-{{k+1}} </span>
     <span *ngIf = "!isEdit" (click) = "onEditZone(k)" class = "title edit-text"><i>edit</i></span></h4>
     <input
+    style="width: 95%;"
     [readonly]="showBtnZone!==k"
     [(ngModel)] = "data.data.zoneDeliveryFee.response[k]"
     type = "text"
@@ -103,10 +190,44 @@ color="primary"
     </div>
 
 </div>
-  <div>
-   
-  
+<div class="col-sm-6 mT10"  *ngFor = "let radio of data.data.radioArr; index as i" style = "padding-bottom: 10px;display: inline-block;">
+  <span *ngIf = "radio.type === 'radio' && (radio.db=='isPayAtStore'||radio.db=='isPayAtDoor'||radio.db=='isPayOnline'||radio.db=='isShowTipState')">
+  <h4 class = "title"><span [ngStyle] = "{color : showBtnCol3===i ? '#dc143c' : '#000000' }"> {{radio.item}} </span> <span *ngIf = "!isEdit" (click) = "onEdit_col3(i)" class = "title edit-text"><i>edit</i></span></h4>
+  <mat-radio-group>
+    <mat-radio-button [disabled] = "showBtnCol3!==i" (click)="radio.response ='YES'" [checked]="radio.response =='YES'" style = "padding-right: 40px;" value = "1" > YES </mat-radio-button>
+    <mat-radio-button [disabled] = "showBtnCol3!==i" (click)="radio.response ='NO'" [checked]="radio.response =='NO'" value = "2" > NO </mat-radio-button>
+  </mat-radio-group>
+</span>
+  <div  *ngIf = "showBtnCol3===i" class ="wrapper" style ="padding:  7px; justify-content: flex-start;">
+  <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol3===i"  style = "padding: 5px;">
+    <button class="btn "   (click) = "editItem(radio)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;padding:10px;border-radius: 8px;color: white;font-weight: bold"> Update</button>  
   </div>
+  <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol3===i" style = "padding: 5px;"> 
+  <button class="btn "   (click) = "cancelEdit()" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;padding:10px;border-radius: 8px;font-weight: bold"> Cancel </button>  
+  </div>
+</div>
+</div>
+  
+</div>
+<div *ngIf="data.testStore">
+  <div *ngIf = "!isIpCheck && !isStorePaused && !isDeliveryPaused" class="flex-container flx" style = "margin-bottom: 12px;justify-content: center;">        
+    <div  *ngFor = "let test of testBtn; index as i" class = "box title testCase " (click) = "onTestCase(test.item)"><span *ngIf="test.item != loadingText">{{test.item}}</span>
+      <div *ngIf="test.item == loadingText" class=""><img width="35%" src="assets/img/loder.gif"></div></div>
+  </div>
+  <div *ngIf = "isIpCheck">
+  
+    <h4 class = "title mT20" style = "text-align: center; font-weight: bold; font-size: 16px;">{{testData.ip}} - {{testData.res}} </h4>
+  </div>
+  <div *ngIf = "isStorePaused">
+  
+    <h4 class = "title mT20" style = "text-align: center; font-weight: bold; font-size: 16px;">{{testData.res}} </h4>
+  </div>
+  <div *ngIf = "isDeliveryPaused">
+  
+    <h4 class = "title mT20" style = "text-align: center; font-weight: bold; font-size: 16px;">{{testData.res}} </h4>
+  </div>
+ 
+
 </div>
 
  
@@ -114,8 +235,8 @@ color="primary"
 <div class="text-center">
 <mat-dialog-actions class = "close-btn" style="display: unset;">
  
-  <button mat-raised-button color="primary" (click) = "close()"> Close </button>
-  <button *ngIf="data.items" mat-raised-button color="primary" (click) = "onItemsChange()" > save </button>
-  <button *ngIf="data.modifiers" mat-raised-button color="primary" (click) = "onModChange()" > save </button>
-</mat-dialog-actions>` 
+  <button mat-raised-button color="primary" class='bold f-16' (click) = "close()"> Close </button>
+  <button *ngIf="data.items" mat-raised-button color="primary"  class='bold f-16' (click) = "onItemsChange()" > save </button>
+  <button *ngIf="data.modifiers" mat-raised-button color="primary" class='bold f-16' (click) = "onModChange()" > save </button>
+</mat-dialog-actions>
 </div>
