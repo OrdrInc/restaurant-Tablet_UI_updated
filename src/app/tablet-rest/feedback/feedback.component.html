@@ -17,32 +17,32 @@
   </div>
   <table *ngIf="displayData.length!=0" class="table item-center" align="center">
     <tbody style="color: black" class="">
-      <tr style="border:2px solid black;" *ngFor="let row of displayData" class="{{row.verified?'grey-c grey-bg':''}}">
+      <tr style="border:2px solid black;" *ngFor="let row of displayData" class="{{row.fStatus?'grey-c grey-bg':''}} {{row.border}}">
         <th
           style="width: 10%"
           class="pB0"
           style="font-weight: bold; padding-left: 20px"
         >
           <span (click)="changeticketId(row)" class="f-30">
-            <div class="f-20" >{{ row.date}}</div>
+            <div class="f-20" >{{ row.storeDate}}</div>
       
           </span>
-          <p class="mT7" style="font-size: 2.2vw;">{{row.time}}</p>
+          <p class="mT7" style="font-size: 2.2vw;">{{row.displayTime}}</p>
         </th>
   
         <th style="width: 25%" class="pB0">
           <p class="f-25 bold mB0">{{row.name }}</p>
         
-          <p class="f-25 bold mB0">{{ formatPhone(row.phoneno) }}</p>
+          <p class="f-25 bold mB0">{{ formatPhone(row.custId) }}</p>
         </th>
         <th style="font-size: 1.6vw; width: 35%">
-          <span style="float: left; padding-top: 10px">{{ row.feedback }}</span>
+          <span style="float: left; padding-top: 10px">{{ row.feedbackTxt }}</span>
         </th>
         <th class="text-center" style="font-size: 1.6vw; width: 10%">
-          <p class="mT10 f-40 bold">{{ row.ratingvalue }}</p>
+          <p class="mT10 f-40 bold">{{ row.starRating }}</p>
         </th>
         <th style="width: 10%">
-          <button (click)="done(row,'done')" *ngIf="!row.verified"
+          <button (click)="done(row,'done')" *ngIf="!row.fStatus"
             style="
              font-size: 1.8vw;
               font-weight: bold;
@@ -54,7 +54,7 @@
            DONE
            
           </button>
-          <button *ngIf="row.verified"
+          <button *ngIf="row.fStatus"
           (click)="done(row,'undone')"
           style="
            font-size: 1.8vw;
@@ -75,3 +75,27 @@
   <div style="height: 150px;">&nbsp;</div>
 </div>
 <app-footer></app-footer>
+
+<div class="modal fade" id="feedbackpop" style="top:0%!important" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-notify modal-success" role="document">
+    
+    <div class="modal-content text-center">
+      
+      <div style="background-color: black!important;" class="modal-header d-flex justify-content-center">
+        <p style="font-size: 25px!important;" class="heading mod-head">FEEDBACK RESPONSE</p>
+      </div>
+      <div style="height:auto" class="text-center pT0">
+        <a (click)="selectedResponse='btn1'" style="width: 90%; border-radius: 8px;" class="btn {{selectedResponse==''?'btn-warning black-c':''}} {{selectedResponse=='btn1'?'btn-warning black-c':''}} {{(selectedResponse!='btn1' && selectedResponse!='')?'btn-grey grey-c':''}} bold f-18 mR30 mL30 mB40 ">We appreciate your feedback and suggestions. Thanks!</a><br>
+        <a (click)="selectedResponse='btn2'" style="width: 90%; border-radius: 8px;" class="btn {{selectedResponse==''?'btn-warning black-c':''}} {{selectedResponse=='btn2'?'btn-warning black-c':''}} {{(selectedResponse!='btn2' && selectedResponse!='')?'btn-grey grey-c':''}} bold f-18 mR30 mL30 mB40 ">We applogies for the inconvenience caused.\n We will look into this immediately. Thanks!</a>
+
+      </div>
+      <div style="height:auto" class="modal-footer flex-center pT0">
+    
+        <a (click)="donecall()" style="border-radius:8px" class="btn black-bg white-c  bold f-18 mR20">Send</a>
+        <a data-dismiss="modal" (click)="close()" style="color:rgb(2, 1, 1)!important;border: 1px solid #3fab59;border-radius:8px" class="btn  white-bg black-c f-18 bold mL20">Close</a>
+      </div>
+    </div>
+   
+  </div>
+</div>

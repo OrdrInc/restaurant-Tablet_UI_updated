@@ -17,6 +17,9 @@
 .mT32{
     margin-top: 32px;
 }
+.bg-grey{
+    background-color: grey;;
+}
 .bR8{
     border-radius: 8px;
 }

@@ -1,101 +1,198 @@
-import { Component, OnInit } from '@angular/core';
-import { AppService } from './../../app.service';
-import { NewService } from './../../new.service';
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { AppService } from "./../../app.service";
+import { NewService } from "./../../new.service";
+import Pusher from "pusher-js";
+declare var $: any;
 @Component({
-  selector: 'app-feedback',
-  templateUrl: './feedback.component.html',
-  styleUrls: ['./feedback.component.css']
+  selector: "app-feedback",
+  templateUrl: "./feedback.component.html",
+  styleUrls: ["./feedback.component.css"],
 })
 export class FeedbackComponent implements OnInit {
-
-  constructor(private service: AppService,private api:NewService) { }
+  @ViewChild("audioOption") audioPlayerRef: ElementRef;
+  constructor(private service: AppService, private api: NewService) {}
   id;
   resturantName;
-  feedbackcount=0;
-  loading=false;
-  displayData=[
-    {
-      name:"Prithvi",
-      date:"1/25/2020",
-      time:"3:20 PM",
-      phoneno:"+19620864669",
-      feedback:"It was awesome service thanks to mike for quick help.It was awesome service thanks to mike for quick help.",
-      ratingvalue:3,
-      verified:false,
-      feedbackid:"1"
-    },
-    {
-      name:"Prithvi",
-      date:"1/25/2020",
-      time:"3:20 PM",
-      phoneno:"+19620864669",
-      feedback:"It was awesome service thanks to mike for quick help.It was awesome service thanks to mike for quick help.",
-      ratingvalue:3,
-      verified:true,
-      feedbackid:"2"
-    },
-    {
-      name:"Prithvi",
-      date:"1/25/2020",
-      time:"3:20 PM",
-      phoneno:"+19620864669",
-      feedback:"It was awesome service thanks to mike for quick help.It was awesome service thanks to mike for quick help.",
-      ratingvalue:3,
-      verified:false,
-      feedbackid:"3"
-    }
-  ]
+  feedbackcount = 0;
+  loading = false;
+  restId = "";
+  displayData = [];
+  pusher: any;
+  channel: any;
+  audio: any;
+  selectedRow:any;
+  selectedResponse='';
+  text='';
   ngOnInit() {
     var str = window.location.href;
-        var res = str.split("fb/");
-        this.id = res[1];
-        this.loading=true;
-        this.service.getrestInfo(this.id).subscribe(
-          data => {
-              this.loading=false;
-              this.resturantName = data[0].friendlyName;
-          error => {
-              this.loading=false;
-              console.log(error);
+    var res = str.split("fb/");
+    this.id = res[1];
+    this.loading = true;
+    this.service.getrestInfo(this.id).subscribe((data) => {
+      this.loading = false;
+      this.resturantName = data[0].friendlyName;
+      this.restId = data[0].restId;
+      this.getAlldata(data[0].restId, data[0].storeDate);
+      (error) => {
+        this.loading = false;
+        console.log(error);
+      };
+    });
+    this.pusher = new Pusher("8892259dee5062541bfb", {
+      cluster: "us2",
+      forceTLS: true,
+    });
+    this.channel = this.pusher.subscribe(this.id);
+    this.channel.bind("feedbackSend", (data) => {
+      console.log(data);
+      if (data.length == 0) {
+        this.refresh();
+      } else {
+        this.pushData(data);
+      }
+    });
+  }
+  refresh() {
+    window.location.reload();
+  }
+  getAlldata(restId, date) {
+    var payload = {
+      restId: restId,
+      storeDate: date,
+    };
+    this.api.cpFeedbackRefresh(payload);
+    this.api.getcpFeedbackRefresh().subscribe((data) => {
+      if (data.result.length > 0) {
+        this.displayData = data.result;
+        this.feedbackCount();
+        this.displayData = this.putAllUndoneAtBottom(this.displayData);
+      }
+    });
+  }
+  pushData(data) {
+    var pusherData = data;
+    pusherData["timer"] = 20;
+    pusherData["border"] = "black-back";
+    console.log(pusherData);
+    this.push(pusherData);
+  }
+  push(data) {
+    this.displayData.unshift(data);
+    this.displayData = this.putAllUndoneAtBottom(this.displayData);
+    this.feedbackCount();
+    for (var k = 0; k < this.displayData.length; k++) {
+      if (this.displayData[k].timer != 0) {
+        this.startTimer(this.displayData[k]);
+      }
+    }
+    this.playAudio();
+  }
+  playAudio() {
+    this.audio = new Audio();
+    this.audio.src = "../../../../assets/sounds/slow-spring-board.mp3";
+    this.audio.load();
+    this.audio.play();
+  }
+  startTimer(data) {
+    var refreshIntervalId = setInterval(() => {
+      if (data.timer > 0) {
+        data.timer--;
+      } else if (data.timer == 0) {
+        for (var z = 0; z < this.displayData.length; z++) {
+          if (this.displayData[z] == data) {
+            this.displayData[z].border = "black-border";
           }
-          });
-          this.feedbackCount();
-          this.displayData= this.putAllUndoneAtBottom(this.displayData);
-         
+        }
+        clearInterval(refreshIntervalId);
+      } else if (data.timer == -1) {
+        clearInterval(refreshIntervalId);
+      }
+    }, 1000);
   }
   formatPhone(x) {
     // console.log('format phone')
-    const val = x.split('');
+    const val = x.split("");
     // console.log(val)
     const displayNo = `(${val[2]}${val[3]}${val[4]}) ${val[5]}${val[6]}${val[7]}-${val[8]}${val[9]}${val[10]}${val[11]}`;
     return displayNo;
   }
-  done(row){
-   row.verified=!row.verified;
-   this.displayData= this.putAllUndoneAtBottom(this.displayData);
-   this.feedbackCount();
+  done(row) {
+    this.selectedResponse='';
+    this.selectedRow=row;
+    if(!row.fStatus){
+    $("#feedbackpop").modal("show");
+    }
+    else{
+      row.fStatus = !row.fStatus;
+      this.text='';
+      this.loading=true;
+      var payload ={
+         fid : row.fid, 
+         fStatus : row.fStatus, 
+         text : this.text, 
+         restId :row.custId,
+         custId :row.restId 
+        }
+        this.api.cpFeedbackAck(payload);
+        this.api.getcpFeedbackAck().subscribe((data) => {
+          this.loading = false;
+          if (data.status == 200) {
+            this.displayData = this.putAllUndoneAtBottom(this.displayData);
+            this.feedbackCount();
+          }
+        });
+    }
+   // 
+    //this.displayData = this.putAllUndoneAtBottom(this.displayData);
+    //this.feedbackCount();
   }
-  putAllUndoneAtBottom(data){
-    var done=[];
-    var undone=[];
-    for(var i=0;i<data.length;i++){
-      if(data[i].verified==true){
-       done.push(data[i]);
-      }
-      else if(data[i].verified==false){ 
-       undone.push(data[i]);
+  donecall(){
+    this.loading=true;
+    var row =this.selectedRow
+    row.fStatus=!row.fStatus;
+    if(this.selectedResponse=='btn1'){
+     this.text='1-2'
+    }
+    else  if(this.selectedResponse=='btn2'){
+      this.text='2-4'
+     }
+    var payload ={
+      fid : row.fid, 
+      fStatus : row.fStatus, 
+      text : this.text, 
+      restId :row.custId,
+      custId :row.restId 
+     }
+     
+      this.api.cpFeedbackAck(payload);
+      this.api.getcpFeedbackAck().subscribe((data) => {
+        this.loading = false;
+        if (data.status == 200) {
+          $("#feedbackpop").modal("hide");
+          this.displayData = this.putAllUndoneAtBottom(this.displayData);
+          this.feedbackCount();
+        }
+      });
+  }
+  putAllUndoneAtBottom(data) {
+    var done = [];
+    var undone = [];
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].fStatus == true) {
+        done.push(data[i]);
+      } else if (data[i].fStatus == false) {
+        undone.push(data[i]);
       }
     }
-    var displayData=undone.concat(done);
+    var displayData = undone.concat(done);
     return displayData;
   }
-  feedbackCount(){
-    this.feedbackcount=0;
-    for(var i=0;i<this.displayData.length;i++){
-      if(this.displayData[i].verified==false){
-        this.feedbackcount=this.feedbackcount+1;
+  feedbackCount() {
+    this.feedbackcount = 0;
+    for (var i = 0; i < this.displayData.length; i++) {
+      if (this.displayData[i].fStatus == false) {
+        this.feedbackcount = this.feedbackcount + 1;
       }
-     }
+    }
   }
-
 }

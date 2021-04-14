@@ -55,6 +55,14 @@ export class StoreManageComponent implements OnInit {
    data=data.toString();
    return data;
   }
+  refund(){
+    var data= {
+      refund: true,
+      data:this.storedata,
+      id:"+1"+this.id
+    }
+    this.openDialog(data);
+  }
   extendPin() {
     this.storePinlengthMessage = false;
     this.loading = true;

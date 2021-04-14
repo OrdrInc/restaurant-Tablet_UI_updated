@@ -96,6 +96,13 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  .white-c{
+    color: white;
+  }
+  ::ng-deep .modal-backdrop{
+    display: none!important;
+  }
+  
   .flx{
     height: 100%;
     padding: 0;

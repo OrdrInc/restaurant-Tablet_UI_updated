@@ -22,7 +22,7 @@ export class AppService {
     feedbackBadgeCount=0;
     broadcastBadgeCount=0;
     curbsideBadgeCount=0;
-
+    textPOSBadgeCount=0;
 
     constructor(private http: Http, private options: RequestOptions) {
         this.options = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) });
@@ -78,12 +78,13 @@ export class AppService {
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }
-    tabletDoneUndoneTogle(curbId,status) {
+    tabletDoneUndoneTogle(curbId,status,restId) {
         let Url = this.serverused + "/delToCarAction";
         let headerInfo = new Headers({ 'Accept': '*', 'Access-Control-Allow-Origin': '*' });
         let data = {
             "curbId": curbId,
-            "status": status
+            "status": status,
+            "restId": restId
         }
         let reqOptions = new RequestOptions({ headers: headerInfo });
         return this.http.post(Url, data, reqOptions)

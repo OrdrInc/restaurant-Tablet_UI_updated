@@ -1,9 +1,11 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NewService } from '../../../new.service';
 import { Component, OnInit, Inject } from '@angular/core';
+import { AppService } from './../../../app.service'
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-
+import { MatDatepickerInputEvent } from "@angular/material/datepicker";
+declare var $: any;
 @Component({
   selector: 'app-store-manage-dialog',
   templateUrl: './store-manage-dialog.component.html',
@@ -11,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class StoreManageDialogComponent implements OnInit {
 
-  constructor(public api: NewService,private router: Router, public dialogRef: MatDialogRef<StoreManageDialogComponent>,
+  constructor(public api: NewService,public cp:AppService,private router: Router, public dialogRef: MatDialogRef<StoreManageDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
   to: string ;
@@ -84,9 +86,48 @@ export class StoreManageDialogComponent implements OnInit {
         'textmsg' : '5 pepsi for pickup'
       }
     ];
-    
-      
+    displayedColumnstxtOrdr = [
+      { name: "#", value: 0, sort: false },
+      { name: "POS ID", value: 1, sort: false },
+      { name: "Date", value: 2, sort: false },
+      { name: "Time", value: 3, sort: false },
+      { name: "Method", value: 4, sort: false },
+      { name: "Payment Method", value: 5, sort: false },
+      { name: "Grand Total", value: 6, sort: false }, 
+      { name: "Type", value: 7, sort: false },
+      { name: "Order Id", value: 8, sort: false },
+
+    ];
+    fromDate;
+    toDate;  
+    errorTextFlag=false;
+    errorText='';
+    loading=false;
+    displayData=[];
+    initateRefund: boolean = true;
+    fullRefund: boolean = false;
+    partialRefund: boolean = false;
+    itemRefund: boolean = false;
+    refundComfirmation: boolean = false;
+    refundSummary:boolean=false;
+    reason: string = "";
+    partialRefundAmount: string = "";
+    partialRefundReason: string = "";
+    customTime: any;
+    itemRefundReason: any;
+    type: any;
+    amount: any;
+    reasonrefund: any;
+    storePIN: any = "";
+    item: any;
+    singleItemRefund: boolean = false;
+    storePinlengthMessage: boolean = false;
+    pinAttempt: number = 0;
+    storePinDisplay: boolean = false;
+    orderDetail:any;
   ngOnInit() {
+    this.errorTextFlag=false;
+    this.errorText='';
     if(this.data.isViewNote){
       if(this.data.notes.length >= 1) {
         this.isNotes = false;
@@ -108,11 +149,171 @@ export class StoreManageDialogComponent implements OnInit {
         }
      }
     }
+    if(this.data.refund){
+      let fromDate = new Date();
+      fromDate.setDate(fromDate.getDate() - 30);
+      this.fromDate= fromDate;
+      let endDate = new Date();
+      endDate.setDate(endDate.getDate());
+      this.toDate= endDate;
+    }
+  
+  }
+  amountValidation(){
+    var amount = parseFloat(this.partialRefundAmount);
+        var fullamount = parseFloat(this.orderDetail.total);
+        if (amount > fullamount) {
+            return true;
+        }
+        else {
+            return false;
+        }
+     
+  }
+  openRefund(order){
+    this.orderDetail=order
+    this.resetRefundVariables();
+    this.initateRefund = true;
+    this.fullRefund = false;
+    this.partialRefund = false;
+    this.itemRefund = false;
+    this.refundSummary = false;
+    $('#refund').modal('show');
+  }
+  resetRefundVariables() {
+    this.reason = "";
+    this.partialRefundAmount = "";
+    this.partialRefundReason = "";
+    this.customTime = "";
+    this.itemRefundReason = "";
+    this.type = "";
+    this.amount = "";
+    this.reasonrefund = "";
+    this.storePIN = "";
+    this.item = "";
+    this.singleItemRefund = false;
+    this.pinAttempt = 0;
+    this.storePinlengthMessage = false;
+    this.storePinDisplay = false;
+}
+refundType(type) {
+  if (type == 'FULL') {
+      this.initateRefund = false;
+      this.fullRefund = true;
+      this.partialRefund = false;
+      this.itemRefund = false;
+      this.refundSummary = false;
+  }
+  if (type == 'PARTIAL') {
+      this.partialRefundAmount = "";
+      this.partialRefundReason = "";
+      this.initateRefund = false;
+      this.fullRefund = false;
+      this.partialRefund = true;
+      this.itemRefund = false;
+      this.refundSummary = false;
+  }
+ 
+}
+submitRefundRequest(type) {
+  this.refundSummary = true;
+  this.initateRefund = false;
+  this.fullRefund = false;
+  this.partialRefund = false;
+  this.itemRefund = false;
+  if (type == 'FULL') {
+      this.singleItemRefund = false;
+      this.type = 'Full Refund'
+      this.amount = this.orderDetail.total;
+      this.amount = this.amount;
+      this.reasonrefund = (<HTMLInputElement>document.getElementById("reason")).value;
+      alert(this.amount+","+this.reasonrefund);
+
+  }
+  if (type == 'PARTIAL') {
+      this.singleItemRefund = false;
+      this.type = 'Partial  Refund'
+      this.amount = this.partialRefundAmount;
+      this.reasonrefund = (<HTMLInputElement>document.getElementById("partialRefundReason")).value;//this.partialRefundReason;
+      alert(this.amount+","+this.reasonrefund);
+    }
+ 
+}
+
+refundClick() {
+
+
+  this.resetRefundVariables();
+  this.initateRefund = true;
+  this.fullRefund = false;
+  this.partialRefund = false;
+  this.itemRefund = false;
+  this.refundSummary = false;
+}
+  search(){
+    this.errorTextFlag=false;
+    this.errorText='';
+    if(this.fromDate== null || this.fromDate==''){
+      this.errorTextFlag=true;
+      this.loading = false;;
+      this.errorText="Please select a From Date." 
+    }
+    else if(this.toDate== null || this.toDate==''){
+      this.errorTextFlag=true;
+      this.loading = false;;
+      this.errorText="Please select To Date." 
+    }
+   else if(this.fromDate> new Date()){
+      this.errorTextFlag=true;
+      this.loading = false;;
+      this.errorText="From Date Can't be greater than Today's Date."
+    }
+    else if(this.toDate> new Date()){
+      this.errorTextFlag=true;
+      this.loading = false;
+      this.errorText="To Date Can't be greater than Today's Date."
+    }
+    else if(this.fromDate> this.toDate){
+      this.errorTextFlag=true;
+      this.loading = false;
+      this.errorText="From Date Can't be greater than To Date."
+    }
+    else{
+      var from = `${this.fromDate.getFullYear()}-${this.dateFormatter((this.fromDate.getMonth() + 1))}-${this.dateFormatter(this.fromDate.getDate())}`;
+      var to= `${this.toDate.getFullYear()}-${this.dateFormatter((this.toDate.getMonth() + 1))}-${this.dateFormatter(this.toDate.getDate())}`;
+      var data={
+        searchBy:"txtorder",
+        fromDate:from,
+        toDate:to,
+        restNum:"+13037071100"//this.data.id
+      }
+      this.loading = true;
+      this.api.cpcontrolData(data);
+      this.api.getcpcontrolData().subscribe((data) => {
+        //console.log(data);
+        this.loading = false;
+        if (data.statusCode == 200) {
+          this.displayData = data.data;
+          if (this.displayData.length == 0) {
+            this.errorTextFlag = true;
+            this.errorText = "No Data Found.";
+          }
+        }
+      });
+    }
   
   }
   onEdit_col3(i) {
     this.isEdit = true;
     this.showBtnCol3 = i;
+  }
+  dateFormatter(val) {
+    val = val.toString()
+    if (val.length != 1) {
+      return val
+    } else {
+      return `0${val}`
+    }
   }
   onEdit_col1(i) {
     this.isEdit = true;

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input,ViewChild} from "@angular/core";
 import { Router } from "@angular/router";
 import { AppService } from './../../app.service';
+import { NewService } from "./../../new.service";
+import Pusher from "pusher-js";
 @Component({
   selector: "app-footer",
   templateUrl: "./footer.component.html",
@@ -13,8 +15,10 @@ export class FooterComponent implements OnInit {
   buttonsFlag = true;
   curPage = "";
   res;
+  pusher: any;
+  channel: any;
   @ViewChild('boxhight') targetElement: any; 
-  constructor(private router: Router,private service: AppService) {}
+  constructor(private router: Router,private service: AppService,private api:NewService) {}
 
   ngOnInit() {
     var str = window.location.pathname;
@@ -22,8 +26,34 @@ export class FooterComponent implements OnInit {
     this.curPage = this.res[1];
     var date = new Date();
     this.year = date.getFullYear();
-    const height = this.targetElement.nativeElement.offsetHeight;
-    alert(height);
+    var payload={
+      restId :"+1"+this.res[2]
+     }
+    
+    this.api.cpFetchCounters(payload);
+    this.api.getcpFetchCounters().subscribe((data) => {
+     this.service.broadcastBadgeCount=parseInt(data.bcCounter);
+     this.service.curbsideBadgeCount=parseInt(data.csCounter);
+     this.service.feedbackBadgeCount=parseInt(data.fbCounter);
+     this.service.textPOSBadgeCount=parseInt(data.textCounter);
+    })
+    this.pusher = new Pusher("8892259dee5062541bfb", {
+      cluster: "us2",
+      forceTLS: true,
+    });
+    this.channel = this.pusher.subscribe(this.res[2]);
+    this.channel.bind("navbarSend", (data) => {
+      console.log(data);
+      if (data.length == 0) {
+       
+      } else {
+        this.service.broadcastBadgeCount=parseInt(data.bcCounter);
+        this.service.curbsideBadgeCount=parseInt(data.csCounter);
+        this.service.feedbackBadgeCount=parseInt(data.fbCounter);
+        this.service.textPOSBadgeCount=parseInt(data.textCounter);  
+      }
+    });
+   
   }
   goTo(page) {
     if (page == "feedback") {

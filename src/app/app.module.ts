@@ -53,10 +53,13 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatTableModule } from "@angular/material/table";
 import { MatDialogModule } from "@angular/material/dialog";
-
+import {MatNativeDateModule} from '@angular/material';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextPopupComponent } from './tablet-rest/store-manage/text-popup/text-popup.component';
 import { DeliveryPopupComponent } from './tablet-rest/store-manage/delivery-popup/delivery-popup.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DetailsPopupComponent } from './tablet-rest/broadcast/details-popup/details-popup.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,10 +96,16 @@ import { DeliveryPopupComponent } from './tablet-rest/store-manage/delivery-popu
     StoreManageComponent,
     TextPopupComponent,
     DeliveryPopupComponent,
+    DetailsPopupComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatMomentDateModule,
+    MatNativeDateModule,
     HttpModule,
     RouterModule,
     BrowserAnimationsModule,
@@ -122,8 +131,8 @@ import { DeliveryPopupComponent } from './tablet-rest/store-manage/delivery-popu
     }),
     RouterModule.forRoot([]),
   ],
-  providers: [AppService, NewService],
+  providers: [AppService, NewService,MatDatepickerModule],
   bootstrap: [AppComponent],
-  entryComponents: [StoreManageDialogComponent],
+  entryComponents: [StoreManageDialogComponent,DetailsPopupComponent],
 })
 export class AppModule {}

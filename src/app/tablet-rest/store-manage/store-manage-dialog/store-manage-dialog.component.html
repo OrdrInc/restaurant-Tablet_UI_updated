@@ -1,7 +1,7 @@
 
 <mat-dialog-content style="max-height:unset!important">
   
-  <h4  class = "title" style = "text-align: center; font-weight: bold; font-size: 20px;"> {{api.resturantName}}</h4>
+  <h4  class = "title" style = "text-align: center; font-weight: bold; font-size: 20px;"> {{api.resturantName}} <i class="fa fa-times f-20 fRight" (click)="close()" aria-hidden="true"></i></h4>
   <hr style = "margin: 2px;">
 
  <div *ngIf = "data.items"> 
@@ -229,6 +229,88 @@ color="primary"
  
 
 </div>
+<div *ngIf="data.refund">
+  <div *ngIf = "loading" class="flex-container text-center" style="display: block;">
+    <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
+  </div>
+  <form *ngIf="!loading"  #f = "ngForm">   
+    <div class="clearfix"></div>
+    <div class="col-sm-12 text-center">
+    <mat-form-field class=w20>
+        <input 
+          matInput 
+          autocomplete="off" 
+          [matDatepicker]="fromPicker" 
+          placeholder="From"
+          value
+          [(ngModel)] = "fromDate"
+          name = "fromDate"
+          #name = "ngModel"
+          >
+        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromPicker></mat-datepicker>
+      </mat-form-field>
+      &nbsp;&nbsp;
+      <mat-form-field class="w20">
+          <input 
+            matInput 
+            autocomplete="off" 
+            [matDatepicker]="toPicker" 
+            placeholder="To"
+            value
+            [(ngModel)] = "toDate"
+            name = "toDate"
+            #name = "ngModel"
+            >
+          <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+          <mat-datepicker #toPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class = "col-sm-12 text-center">
+          <button 
+            mat-raised-button 
+            class="black-bg white-c mL20 mB20"
+            type = "submit"
+            (click)="search()"
+             > Search </button> 
+      </div>
+      <div class="clearfix"></div>
+      <div *ngIf="errorTextFlag" class="alert alert-danger w40 text-center" style="margin: auto;" role="alert">
+       {{errorText}}
+      </div>
+      <table *ngIf="displayData.length>0" id = "DataTable" class="table table-bordered">
+        <thead>
+          <tr class = "head-row"> 
+            <th  *ngFor="let row of  displayedColumnstxtOrdr" class = "head-row" scope="col">{{row.name}}
+              <span (click)="sorting('table1',row.value)" *ngIf="row.sort==true">
+                <i title="Sort in Ascending Order" *ngIf="order=='DSC'" class="fa fRight f-20 fa-caret-up  " aria-hidden="true"></i>
+                <i title="Sort in Descending Order"  *ngIf="order=='ASC'" class="fa fRight f-20 fa-caret-down" aria-hidden="true"></i>
+                </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+           class = "table-row"
+           *ngFor = "let order of displayData; index as i"
+           (click) = "openRefund(order)"
+           [ngStyle]="{'background-color': !order.isPaid ? '#f5c6cb' : (order.couponName== true ? '#d3d3d3' : '#c3e6cb') ,'display':order.isPaid ?'':'none' }"
+           >
+            <td class = "head-row" scope="row">{{i+1}}</td>
+            <td class = "head-row">{{order.ticketId}}</td>
+            <td class = "head-row" >{{order.orderDate}}</td>
+            <td class = "head-row">{{order.orderTime}}</td>
+            <td class = "head-row">{{order.method.toUpperCase()}}</td>
+            <td class = "head-row">{{order.methodPayment.toUpperCase()}}</td>
+            <td class = "head-row">${{order.total}}</td>
+            <td class = "head-row"><span *ngIf="order.isProOrder">PRO</span><span *ngIf="!order.isProOrder">TXT</span></td>
+            <td class = "head-row">{{order.orderId}}</td>
+          </tr>     
+          
+        </tbody>
+      </table>
+    </form>
+</div>
 
  
 </mat-dialog-content>
@@ -239,4 +321,141 @@ color="primary"
   <button *ngIf="data.items" mat-raised-button color="primary"  class='bold f-16' (click) = "onItemsChange()" > save </button>
   <button *ngIf="data.modifiers" mat-raised-button color="primary" class='bold f-16' (click) = "onModChange()" > save </button>
 </mat-dialog-actions>
+</div>
+
+
+<div class="modal" id="refund" style="height:auto;top:0%!important" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-info modal-xl" role="document">
+        <!--Content-->
+        <div *ngIf="initateRefund" class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">INITIATE REFUND </h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="card pT20 pB20">
+
+                    <div class="flex-center">
+                        <a data-dismiss="modal" (click)="refundType('FULL')" class="btn btn-info f-22">Full
+                            Refund</a><br>
+                    </div>
+                    <div class="flex-center">
+                        <a data-dismiss="modal" (click)="refundType('PARTIAL')"
+                            class="btn btn-info pL20 pR20 f-22">Partial
+                            Refund</a><br>
+                    </div>
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a data-dismiss="modal" (click)="click()" class="btn btn-info">Close</a>
+            </div>
+        </div>
+        <div *ngIf="fullRefund" class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">FULL REFUND :  {{orderDetail.orderId}}</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="card pT20 pB20">
+                    <h5>Select a Reason from Below Dropdown</h5>
+                    <select class="form-control w70 margin-auto" id="reason" required>
+                        <option selected="selected" value="Customer was overcharged">Customer was overcharged
+                        </option>
+                        <option value="Order was not complete">Order was not complete</option>
+                        <option value="Order was delayed">Order was delayed</option>
+                        <option value="Order was not received">Order was not received</option>
+                        <option value="Managers Decision">Managers Decision</option>
+                    </select>
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a data-dismiss="modal" (click)="submitRefundRequest('FULL')" class="btn btn-info">Submit</a>
+                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Back</a>
+            </div>
+        </div>
+        <div *ngIf="partialRefund" class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">PARTIAL REFUND :  {{orderDetail.orderId}}</h5>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <div class="card pT20 pB20">
+                    <h5>Enter the Amount that you want to refund</h5>
+                    <div class="col-auto w70 margin-auto pT20">
+                        <div class="input-group mb-2">
+                            <div *ngIf="amountValidation()==true" class="alert alert-danger col-sm-12" role="alert">
+                                Refunt Amount Can't be greater than Total Amount
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                            <input type="number" [(ngModel)]="partialRefundAmount" class="form-control"
+                                id="inlineFormInputGroup" placeholder="Amount">
+                        </div>
+                    </div>
+                    <div class="col-auto  w70 margin-auto pT20">
+                        <div class="input-group mb-2">
+                            <select class="form-control w70 margin-auto" id="partialRefundReason" required>
+                                <option value="Order was delayed">None</option>
+                                <option selected="selected" value="Customer was overcharged">Customer was
+                                    overcharged
+                                </option>
+                                <option value="Order was not complete">Order was not complete</option>
+                                <option value="Order was delayed">Order was delayed</option>
+                                <option value="Order was not received">Order was not received</option>
+                                <option value="Managers Decision">Managers Decision</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Footer-->
+            <div style="height:auto" class="modal-footer flex-center">
+                <a data-dismiss="modal" (click)="submitRefundRequest('PARTIAL')"
+                    class="btn btn-info {{partialRefundAmount==''?'disabled':''}}">Submit</a>
+                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Back</a>
+            </div>
+        </div>
+        <div *ngIf="refundSummary" class="modal-content text-center">
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">REFUND SUMMARY</h5>
+            </div>
+            <div class="modal-body">
+                <div class="card pT20 pB20">
+                    <h5>Refund Type: {{type}} </h5>
+                    <h5 *ngIf="singleItemRefund">Refund Item: {{item}}</h5>
+                    <h5>Refund Amount: ${{amount}} </h5>
+                    <h5>Refund Reason: {{reasonrefund}}</h5>
+                    <br>
+                    <div *ngIf="pinAttempt >0 && pinAttempt <= 3" class="alert alert-danger" role="alert">
+                        Wrong Pin. Attempts {{this.pinAttempt}} of 3.
+                    </div>
+                    <div *ngIf="pinAttempt >3" class="alert alert-danger" role="alert">
+                        You have entered Wrong Pin 3 times. Call (415) 903-4020 for support.
+                    </div>
+                    <strong>
+                        <h5 class="bold f-23">Enter Your Store PIN (4-Digit):</h5>
+                    </strong>
+                    <div class="col-auto w70 pT20 margin-auto">
+                        <div class="input-group mb-2">
+                            <input maxlength=4 type="number" [(ngModel)]="storePIN" class="form-control"
+                                id="inlineFormInputGroup" placeholder="PIN">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height:auto" class="modal-footer flex-center">
+                <a (click)="finalRefund()" class="btn btn-info">Process Refund</a>
+                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Cancel</a>
+            </div>
+        </div>
+    </div>
 </div>
