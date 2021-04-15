@@ -57,15 +57,15 @@ export class FooterComponent implements OnInit {
   }
   goTo(page) {
     if (page == "feedback") {
-      this.service.feedbackBadgeCount=0;
+     
       this.router.navigate(["/fb/" + this.res[2]]);
     }
     if (page == "broadcast") {
-      this.service.broadcastBadgeCount=0;
+     
       this.router.navigate(["/broadcast/" + this.res[2]]);
     }
     if (page == "curbside") {
-      this.service.curbsideBadgeCount=0;
+     
       this.router.navigate(["/curbside/" + this.res[2]]);
     }
     if (page == "rest") {

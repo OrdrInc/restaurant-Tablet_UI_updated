@@ -5,6 +5,7 @@ import Pusher from "pusher-js";
 import { MatDialog } from "@angular/material/dialog";
 import { DetailsPopupComponent } from "./details-popup/details-popup.component";
 import { Howl, Howler } from "howler";
+
 @Component({
   selector: "app-broadcast",
   templateUrl: "./broadcast.component.html",
@@ -147,6 +148,12 @@ export class BroadcastComponent implements OnInit {
   done(row) {
     this.loading = true;
     row.bStatus = !row.bStatus;
+    if(!row.bStatus){
+      this.service.broadcastBadgeCount= this.service.broadcastBadgeCount+1;
+    }
+    else{
+      this.service.broadcastBadgeCount= this.service.broadcastBadgeCount-1;
+    }
     var payload = {
       bid: row.bid,
       bstatus: row.bStatus,

@@ -78,7 +78,7 @@ export class FeedbackComponent implements OnInit {
   }
   push(data) {
     this.displayData.unshift(data);
-    this.displayData = this.putAllUndoneAtBottom(this.displayData);
+   // this.displayData = this.putAllUndoneAtBottom(this.displayData);
     this.feedbackCount();
     for (var k = 0; k < this.displayData.length; k++) {
       if (this.displayData[k].timer != 0) {
@@ -124,6 +124,7 @@ export class FeedbackComponent implements OnInit {
     }
     else{
       row.fStatus = !row.fStatus;
+    
       this.text='';
       this.loading=true;
       var payload ={
@@ -137,6 +138,7 @@ export class FeedbackComponent implements OnInit {
         this.api.getcpFeedbackAck().subscribe((data) => {
           this.loading = false;
           if (data.status == 200) {
+            this.service.feedbackBadgeCount= this.service.feedbackBadgeCount+1;
             this.displayData = this.putAllUndoneAtBottom(this.displayData);
             this.feedbackCount();
           }
@@ -147,6 +149,7 @@ export class FeedbackComponent implements OnInit {
     //this.feedbackCount();
   }
   donecall(){
+   
     this.loading=true;
     var row =this.selectedRow
     row.fStatus=!row.fStatus;
@@ -168,6 +171,7 @@ export class FeedbackComponent implements OnInit {
       this.api.getcpFeedbackAck().subscribe((data) => {
         this.loading = false;
         if (data.status == 200) {
+          this.service.feedbackBadgeCount= this.service.feedbackBadgeCount-1;
           $("#feedbackpop").modal("hide");
           this.displayData = this.putAllUndoneAtBottom(this.displayData);
           this.feedbackCount();

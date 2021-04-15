@@ -35,6 +35,22 @@
         <span style="float: left; padding-top: 10px">{{ row.CarInfo }}&nbsp;{{row.OrderInfo.notes}}</span>
       </th>
       <th style="width: 10%">
+        <button (click)="respond(row)" *ngIf="!row.status"
+          style="
+           font-size: 1.8vw;
+            font-weight: bold;
+            border-radius: 8px;
+            color: black;
+            background-color: #3fab59;
+          "
+          class="btn black-c btn-warning"
+        >
+         RESPOND
+         
+        </button>
+       
+      </th>
+      <th style="width: 10%">
         <button (click)="done(row,'done')" *ngIf="!row.status"
           style="
            font-size: 1.8vw;
@@ -61,22 +77,7 @@
        
       </button>
       </th>
-      <th style="width: 10%">
-        <button (click)="respond(row)" *ngIf="!row.status"
-          style="
-           font-size: 1.8vw;
-            font-weight: bold;
-            border-radius: 8px;
-            color: black;
-            background-color: #3fab59;
-          "
-          class="btn black-c btn-warning"
-        >
-         RESPOND
-         
-        </button>
-       
-      </th>
+      
     </tr>
   </tbody>
 </table>

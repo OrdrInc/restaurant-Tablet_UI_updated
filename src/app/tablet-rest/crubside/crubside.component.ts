@@ -187,8 +187,10 @@ export class CrubsideComponent implements OnInit {
   done(row, status) {
     if (status == "done") {
       var value = true;
+      this.service.curbsideBadgeCount= this.service.curbsideBadgeCount-1;
     } else {
       value = false;
+      this.service.curbsideBadgeCount= this.service.curbsideBadgeCount+1;
     }
     this.service.tabletDoneUndoneTogle(row.CurbId, value,this.restIdNew).subscribe((data) => {
       if (data.msg == true) {
