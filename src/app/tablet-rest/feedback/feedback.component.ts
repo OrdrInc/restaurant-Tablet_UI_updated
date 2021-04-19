@@ -79,19 +79,13 @@ export class FeedbackComponent implements OnInit {
   push(data) {
     this.displayData.unshift(data);
    // this.displayData = this.putAllUndoneAtBottom(this.displayData);
-    this.feedbackCount();
+    this.feedbackcount = this.feedbackcount + 1;
     for (var k = 0; k < this.displayData.length; k++) {
       if (this.displayData[k].timer != 0) {
         this.startTimer(this.displayData[k]);
       }
     }
-    this.playAudio();
-  }
-  playAudio() {
-    this.audio = new Audio();
-    this.audio.src = "../../../../assets/sounds/slow-spring-board.mp3";
-    this.audio.load();
-    this.audio.play();
+  //  this.playAudio();
   }
   startTimer(data) {
     var refreshIntervalId = setInterval(() => {
@@ -175,6 +169,7 @@ export class FeedbackComponent implements OnInit {
           $("#feedbackpop").modal("hide");
           this.displayData = this.putAllUndoneAtBottom(this.displayData);
           this.feedbackCount();
+          $("#feedbackSucess").modal("show");
         }
       });
   }

@@ -72,14 +72,9 @@ export class BroadcastComponent implements OnInit {
         this.startTimer(this.displayData[k]);
       }
     }
-    this.playAudio();
+    //this.playAudio();
   }
-  playAudio() {
-    this.audio = new Audio();
-    this.audio.src = "../../../../assets/sounds/slow-spring-board.mp3";
-    this.audio.load();
-    this.audio.play();
-  }
+  
   startTimer(data) {
     var refreshIntervalId = setInterval(() => {
       if (data.timer > 0) {

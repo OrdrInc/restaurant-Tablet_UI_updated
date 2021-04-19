@@ -15,7 +15,7 @@
     font-size: 2.2vw!important;
 }
 .grey-c{
-   color: grey;;
+   color: grey!important;
 }
 .grey-bg{
     background: darkgrey;
@@ -32,4 +32,7 @@
 }
 .mT7{
     margin-top: 7px;
+}
+.gold{
+    color: goldenrod;
 }

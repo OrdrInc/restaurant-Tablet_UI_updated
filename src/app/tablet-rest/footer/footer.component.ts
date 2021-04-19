@@ -17,6 +17,7 @@ export class FooterComponent implements OnInit {
   res;
   pusher: any;
   channel: any;
+  audio: any;
   @ViewChild('boxhight') targetElement: any; 
   constructor(private router: Router,private service: AppService,private api:NewService) {}
 
@@ -43,7 +44,7 @@ export class FooterComponent implements OnInit {
     });
     this.channel = this.pusher.subscribe(this.res[2]);
     this.channel.bind("navbarSend", (data) => {
-      console.log(data);
+      this.playAudio();
       if (data.length == 0) {
        
       } else {
@@ -54,6 +55,12 @@ export class FooterComponent implements OnInit {
       }
     });
    
+  }
+  playAudio() {
+    this.audio = new Audio();
+    this.audio.src = "../../../../assets/sounds/slow-spring-board.mp3";
+    this.audio.load();
+    this.audio.play();
   }
   goTo(page) {
     if (page == "feedback") {
