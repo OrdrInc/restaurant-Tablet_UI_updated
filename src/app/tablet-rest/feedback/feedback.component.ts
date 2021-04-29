@@ -32,6 +32,7 @@ export class FeedbackComponent implements OnInit {
       this.loading = false;
       this.resturantName = data[0].friendlyName;
       this.restId = data[0].restId;
+      //this.service.isFeedback=data[0].isFeedback;
       this.getAlldata(data[0].restId, data[0].storeDate);
       (error) => {
         this.loading = false;

@@ -30,6 +30,7 @@ export class NewService {
  private feedbackAckData= new Subject<any>();
  private feedbackRefreshData= new Subject<any>();
  private fetchCountersData= new Subject<any>();
+ private refundData= new Subject<any>();
   constructor(private http: HttpClient) {
 
   }
@@ -72,6 +73,17 @@ export class NewService {
   getcpFetchCounters() {
     return this.fetchCountersData.asObservable();
   }
+  getcpRefund() {
+    return this.refundData.asObservable();
+  }
+  cpRefund(data) {
+    var refund= JSON.stringify(data);
+      const localAddress = `${this.address}updateRefunds`;
+      this.http.post<any>(localAddress, refund, httpOptions)
+        .subscribe((data) => {
+          this.refundData.next(data);
+        });
+   }
   cpFetchCounters(data) {
     var fetchCounters= JSON.stringify(data);
       const localAddress = `${this.address1}fetchCounters`;

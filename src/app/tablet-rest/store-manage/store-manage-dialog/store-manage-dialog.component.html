@@ -95,7 +95,7 @@ color="primary"
     
     <div  *ngIf = "showBtnCol1===i" class ="wrapper" style ="padding:  7px;width: 50%; justify-content: center;">
       <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol1===i"  style = "padding: 5px;">
-        <button class="btn "   (click) = "editItem(day)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;font-weight: bold;padding:10px;border-radius: 8px;"> Update</button>  
+        <button class="btn "   (click) = "editItem(day)" type="button" style = "border:  1px solid #31afd5; font-size: 14px; background-color: #31afd5;font-weight: bold;padding:10px;border-radius: 8px; color: white;"> Update</button>  
       </div>
       <div [attr.id]="'undoBtn'+i" *ngIf="showBtnCol1===i" style = "padding: 5px;"> 
       <button class="btn"   (click) = "cancelEdit1(day, i)" type="button" style = "border: 1px solid black; font-size: 14px; color: black; background-color: white;font-weight: bold;padding:10px;border-radius: 8px;"> Cancel </button>  
@@ -265,15 +265,15 @@ color="primary"
           <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
           <mat-datepicker #toPicker></mat-datepicker>
         </mat-form-field>
+    &nbsp;&nbsp;
+        <button 
+        mat-raised-button 
+        class="black-bg white-c mL20 mB20"
+        type = "submit"
+        (click)="search()"
+         > Search </button> 
       </div>
-      <div class = "col-sm-12 text-center">
-          <button 
-            mat-raised-button 
-            class="black-bg white-c mL20 mB20"
-            type = "submit"
-            (click)="search()"
-             > Search </button> 
-      </div>
+      
       <div class="clearfix"></div>
       <div *ngIf="errorTextFlag" class="alert alert-danger w40 text-center" style="margin: auto;" role="alert">
        {{errorText}}
@@ -281,7 +281,7 @@ color="primary"
       <table *ngIf="displayData.length>0" id = "DataTable" class="table table-bordered">
         <thead>
           <tr class = "head-row"> 
-            <th  *ngFor="let row of  displayedColumnstxtOrdr" class = "head-row" scope="col">{{row.name}}
+            <th  *ngFor="let row of  displayedColumnstxtOrdr" class = "head-row bold text-center" style="text-transform: uppercase;" scope="col">{{row.name}}
               <span (click)="sorting('table1',row.value)" *ngIf="row.sort==true">
                 <i title="Sort in Ascending Order" *ngIf="order=='DSC'" class="fa fRight f-20 fa-caret-up  " aria-hidden="true"></i>
                 <i title="Sort in Descending Order"  *ngIf="order=='ASC'" class="fa fRight f-20 fa-caret-down" aria-hidden="true"></i>
@@ -291,10 +291,10 @@ color="primary"
         </thead>
         <tbody>
           <tr
-           class = "table-row"
+           class = "table-row text-center"
            *ngFor = "let order of displayData; index as i"
            (click) = "openRefund(order)"
-           [ngStyle]="{'background-color': !order.isPaid ? '#f5c6cb' : (order.couponName== true ? '#d3d3d3' : '#c3e6cb') ,'display':order.isPaid ?'':'none' }"
+           [ngStyle]="{'background-color': !order.isPaid ? '' : 'green' ,'color': !order.isPaid ? '' : 'white' ,'display':order.isPaid ?'':'none' }"
            >
             <td class = "head-row" scope="row">{{i+1}}</td>
             <td class = "head-row">{{order.ticketId}}</td>
@@ -317,9 +317,9 @@ color="primary"
 <div class="text-center">
 <mat-dialog-actions class = "close-btn" style="display: unset;">
  
-  <button mat-raised-button color="primary" class='bold f-16' (click) = "close()"> Close </button>
-  <button *ngIf="data.items" mat-raised-button color="primary"  class='bold f-16' (click) = "onItemsChange()" > save </button>
-  <button *ngIf="data.modifiers" mat-raised-button color="primary" class='bold f-16' (click) = "onModChange()" > save </button>
+  <button mat-raised-button style="background-color:#17a2b8!important;color: white; " class='bold f-16' (click) = "close()"> Close </button>
+  <button *ngIf="data.items" mat-raised-button style="background-color:#17a2b8!important; color: white;"  class='bold f-16' (click) = "onItemsChange()" > Save </button>
+  <button *ngIf="data.modifiers" mat-raised-button style="background-color:#17a2b8!important;color: white; " class='bold f-16' (click) = "onModChange()" > Save </button>
 </mat-dialog-actions>
 </div>
 
@@ -330,37 +330,38 @@ color="primary"
         <!--Content-->
         <div *ngIf="initateRefund" class="modal-content text-center">
             <!--Header-->
-            <div class="modal-header d-flex justify-content-center">
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
                 <h5 class="heading mod-head">INITIATE REFUND </h5>
             </div>
             <!--Body-->
             <div class="modal-body">
-                <div class="card pT20 pB20">
+                <div class="pT20 pB20">
 
-                    <div class="flex-center">
-                        <a data-dismiss="modal" (click)="refundType('FULL')" class="btn btn-info f-22">Full
+                    <div style="display: inline-block;"  class="flex-center">
+                        <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="refundType('FULL')" class="btn btn-info f-22">Full
                             Refund</a><br>
                     </div>
-                    <div class="flex-center">
-                        <a data-dismiss="modal" (click)="refundType('PARTIAL')"
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="display: inline-block;"  class="flex-center">
+                        <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="refundType('PARTIAL')"
                             class="btn btn-info pL20 pR20 f-22">Partial
                             Refund</a><br>
                     </div>
                 </div>
             </div>
             <!--Footer-->
-            <div style="height:auto" class="modal-footer flex-center">
-                <a data-dismiss="modal" (click)="click()" class="btn btn-info">Close</a>
+            <div style="height:auto"  class="modal-footer flex-center">
+                <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="click()" class="btn btn-info">Close</a>
             </div>
         </div>
         <div *ngIf="fullRefund" class="modal-content text-center">
             <!--Header-->
-            <div class="modal-header d-flex justify-content-center">
-                <h5 class="heading mod-head">FULL REFUND :  {{orderDetail.orderId}}</h5>
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">FULL REFUND: Ticket no.  {{orderDetail.ticketId}}</h5>
             </div>
             <!--Body-->
             <div class="modal-body">
-                <div class="card pT20 pB20">
+               <!-- <div class=" pT20 pB20">
                     <h5>Select a Reason from Below Dropdown</h5>
                     <select class="form-control w70 margin-auto" id="reason" required>
                         <option selected="selected" value="Customer was overcharged">Customer was overcharged
@@ -370,22 +371,22 @@ color="primary"
                         <option value="Order was not received">Order was not received</option>
                         <option value="Managers Decision">Managers Decision</option>
                     </select>
-                </div>
+                </div> -->
             </div>
             <!--Footer-->
             <div style="height:auto" class="modal-footer flex-center">
-                <a data-dismiss="modal" (click)="submitRefundRequest('FULL')" class="btn btn-info">Submit</a>
-                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Back</a>
+                <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="submitRefundRequest('FULL')" class="btn btn-info">Submit</a>
+                <a data-dismiss="modal" style="background-color:#17a2b8!important; " (click)="refundClick()" class="btn btn-info">Back</a>
             </div>
         </div>
         <div *ngIf="partialRefund" class="modal-content text-center">
             <!--Header-->
-            <div class="modal-header d-flex justify-content-center">
-                <h5 class="heading mod-head">PARTIAL REFUND :  {{orderDetail.orderId}}</h5>
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
+                <h5 class="heading mod-head">PARTIAL REFUND: Ticket no.  {{orderDetail.ticketId}}</h5>
             </div>
             <!--Body-->
             <div class="modal-body">
-                <div class="card pT20 pB20">
+                <div class=" pT20 pB20">
                     <h5>Enter the Amount that you want to refund</h5>
                     <div class="col-auto w70 margin-auto pT20">
                         <div class="input-group mb-2">
@@ -400,7 +401,7 @@ color="primary"
                                 id="inlineFormInputGroup" placeholder="Amount">
                         </div>
                     </div>
-                    <div class="col-auto  w70 margin-auto pT20">
+                   <!-- <div class="col-auto  w70 margin-auto pT20">
                         <div class="input-group mb-2">
                             <select class="form-control w70 margin-auto" id="partialRefundReason" required>
                                 <option value="Order was delayed">None</option>
@@ -414,26 +415,29 @@ color="primary"
                             </select>
 
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <!--Footer-->
             <div style="height:auto" class="modal-footer flex-center">
-                <a data-dismiss="modal" (click)="submitRefundRequest('PARTIAL')"
+                <a style="background-color:#17a2b8!important; " data-dismiss="modal" (click)="submitRefundRequest('PARTIAL')"
                     class="btn btn-info {{partialRefundAmount==''?'disabled':''}}">Submit</a>
-                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Back</a>
+                <a style="background-color:#17a2b8!important; " data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Back</a>
             </div>
         </div>
         <div *ngIf="refundSummary" class="modal-content text-center">
-            <div class="modal-header d-flex justify-content-center">
+            <div style="background-color:#17a2b8!important; " class="modal-header d-flex justify-content-center">
                 <h5 class="heading mod-head">REFUND SUMMARY</h5>
             </div>
             <div class="modal-body">
-                <div class="card pT20 pB20">
+              <div *ngIf = "finalLoading" class="flex-container text-center" style="display: block;">
+                <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
+              </div>
+                <div *ngIf="!finalLoading" class="pT20 pB20">
                     <h5>Refund Type: {{type}} </h5>
                     <h5 *ngIf="singleItemRefund">Refund Item: {{item}}</h5>
                     <h5>Refund Amount: ${{amount}} </h5>
-                    <h5>Refund Reason: {{reasonrefund}}</h5>
+                   <!-- <h5>Refund Reason: {{reasonrefund}}</h5>-->
                     <br>
                     <div *ngIf="pinAttempt >0 && pinAttempt <= 3" class="alert alert-danger" role="alert">
                         Wrong Pin. Attempts {{this.pinAttempt}} of 3.
@@ -446,15 +450,15 @@ color="primary"
                     </strong>
                     <div class="col-auto w70 pT20 margin-auto">
                         <div class="input-group mb-2">
-                            <input maxlength=4 type="number" [(ngModel)]="storePIN" class="form-control"
-                                id="inlineFormInputGroup" placeholder="PIN">
+                          <input style="height:45px" appAutoFocus maxlength="4" onKeyPress="if(this.value.length==4) return false;" type="tel" [(ngModel)]="storePIN"
+                          class="form-control" id="storepinn" placeholder="PIN">
                         </div>
                     </div>
                 </div>
             </div>
             <div style="height:auto" class="modal-footer flex-center">
-                <a (click)="finalRefund()" class="btn btn-info">Process Refund</a>
-                <a data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Cancel</a>
+                <a  style="background-color:#17a2b8!important; " (click)="finalRefund()" class="btn btn-info {{storePinString(storePIN).length==4?'':'disabled'}}">Process Refund</a>
+                <a style="background-color:#17a2b8!important; " data-dismiss="modal" (click)="refundClick()" class="btn btn-info">Cancel</a>
             </div>
         </div>
     </div>

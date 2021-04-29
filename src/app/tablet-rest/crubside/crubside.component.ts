@@ -57,6 +57,7 @@ export class CrubsideComponent implements OnInit {
       this.resturantName = data[0].friendlyName;
       // data[0].storeDate
       this.restIdNew=data[0].restId;
+      //this.service.isCurbSide=data[0].isCurbSide;
       this.getAlldata(data[0].restId, data[0].storeDate);
       (error) => {
         console.log(error);

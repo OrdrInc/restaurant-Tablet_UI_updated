@@ -36,6 +36,7 @@ export class BroadcastComponent implements OnInit {
       this.loading = false;
       this.resturantName = data[0].friendlyName;
       this.restId = data[0].restId;
+      //this.service.isBroadcast=data[0].isBroadcast;
       this.getAlldata(data[0].restId, data[0].storeDate, "Jets");
       (error) => {
         this.loading = false;

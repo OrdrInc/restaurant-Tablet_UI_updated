@@ -10,7 +10,7 @@
   </nav>
 </div>
 
-
+<div *ngIf="service.isCurbSide">
 <table *ngIf="displayData.length!=0" class="table item-center" align="center">
   <tbody style="color: black" class="">
     <tr *ngFor="let row of displayData" class="{{row.status?'grey-c grey-bg':''}} {{row.border}}">
@@ -84,9 +84,15 @@
 <div class="text-center mT50 " *ngIf="displayData.length==0">
   <img src="assets/img/curb1.gif">
 </div>
+</div>
 <!--<div class="text-center">
   <button (click)="pushData()" class="btn btn-primary">Push Data</button>
 </div> -->
+<div *ngIf="!service.isCurbSide">
+  <div style="margin-top:150px" class="text-center bold f-25">
+    <p>{{service.isCurbsideLockedMessage}}</p>
+  </div>
+  </div>
 <div style="height: 150px;">&nbsp;</div>
 <app-ticket-id-popup [ticketId]="ticketId" (save)="save($event)"></app-ticket-id-popup>
 <app-respond-popup [timeJson]="timeJson" (respond)="respondSave($event)"></app-respond-popup>

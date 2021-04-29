@@ -49,11 +49,14 @@
         <span *ngIf="storedata.actionBtnArr[0].item=='Pause Store'">Pause Text Orders</span>
       </p>
     </div>
-    <div (click)="storeOperation()" class="box bg-dark">
-      <p class="mT32">Store Operation</p>
+    <div (click)="refund()" class="box bg-grey">
+      <p class="mT32">Refund</p>
     </div>
-<div (click)="items()" class="box bg-primary">
-  <p class="mT32">Items</p>
+   <!-- <div (click)="storeOperation()" style="background-color:#17a2b8!important; " class="box bg-dark">
+      <p class="mT32">Store Operation</p>
+    </div>-->
+<div (click)="items()" style="background-color:#ffc107!important;border:none;color: black;" class="box bg-primary">
+  <p class="mT32">Items Out of Stock Manager</p>
 </div>
 <div class="clearfix"></div>
 <div class="box  {{storedata.actionBtnArr[1].item=='Resume Delivery' ? 'bg-success':'maroon-bg'}}" (click)="deliveryOrders()">
@@ -62,21 +65,20 @@
     <span *ngIf="storedata.actionBtnArr[1].item=='Pause Delivery'">Pause Delivery Orders</span>
   </p>
 </div>
-<div (click)="storeHours()" class="box yellow-bg">
-  <p class="mT32">Store Hours</p>
+<div (click)="testStore()"style="background-color:white!important;color:black;border:1px solid black; " class="box bg-primary">
+  <p class="mT32">Test Store</p>
 </div>
-<div (click)="modifiers()" class="box bg-secondary">
-  <p class="mT32">Modifiers</p>
+<!--<div (click)="storeHours()" style="background-color:#17a2b8!important; " class="box yellow-bg">
+  <p class="mT32">Store Hours</p>
+</div>-->
+<div (click)="modifiers()" style="background-color:#ffc107!important;border:none;color: black;" class="box bg-secondary">
+  <p class="mT32">Modifiers  Out of Stock Manager</p>
 </div>
 
 
 <div class="clearfix"></div>
-<div (click)="refund()" class="box bg-grey">
-  <p class="mT32">Refund</p>
-</div>
-<div (click)="testStore()" class="box bg-primary">
-  <p class="mT32">Test Store</p>
-</div>
+
+
 
 
 

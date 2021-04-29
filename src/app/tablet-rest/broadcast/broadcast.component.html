@@ -8,6 +8,7 @@
   >
   </nav>
 </div>
+<div *ngIf="service.isBroadcast">
 <div class="flex-container text-center" *ngIf="loading">
   <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
 </div>
@@ -71,5 +72,11 @@
     </tbody>
   </table>
   <div style="height: 150px;">&nbsp;</div>
+</div>
+</div>
+<div *ngIf="!service.isBroadcast">
+<div style="margin-top:150px" class="text-center bold f-25">
+  <p>{{service.isBroadcastLockedMessage}}</p>
+</div>
 </div>
 <app-footer></app-footer>

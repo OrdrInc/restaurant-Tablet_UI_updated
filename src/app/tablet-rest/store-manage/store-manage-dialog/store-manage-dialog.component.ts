@@ -17,6 +17,7 @@ export class StoreManageDialogComponent implements OnInit {
   @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
   to: string ;
+  finalLoading=false;
   msg: string;
   notes: string;
   isNotes = true;
@@ -40,22 +41,22 @@ export class StoreManageDialogComponent implements OnInit {
   isDeliveryPaused=false;
   testBtn = [
     {
-      'item' : 'Store Paused',
+      'item' : 'Is Text Ordering On',
       'bg' : 'white',
       'color' : 'black'
     },
     {
-      'item' : 'Delivery Paused',
+      'item' : 'Is Delivery On',
       'bg' : '#28a844',
       'color' : 'white'
     },
     {
-      'item' : '192.168.56.12',
+      'item' : 'Is Store Connection-1 working?',
       'bg' : '#027afe',
       'color' : 'white'
     },
     {
-      'item' : '30.40.60.89',
+      'item' : 'Is Store Connection-2 working?',
       'bg' : '#13a3b8',
       'color' : 'white'
     },
@@ -117,7 +118,7 @@ export class StoreManageDialogComponent implements OnInit {
     itemRefundReason: any;
     type: any;
     amount: any;
-    reasonrefund: any;
+    reasonrefund: any='Managers decision';
     storePIN: any = "";
     item: any;
     singleItemRefund: boolean = false;
@@ -151,7 +152,7 @@ export class StoreManageDialogComponent implements OnInit {
     }
     if(this.data.refund){
       let fromDate = new Date();
-      fromDate.setDate(fromDate.getDate() - 30);
+      fromDate.setDate(fromDate.getDate());
       this.fromDate= fromDate;
       let endDate = new Date();
       endDate.setDate(endDate.getDate());
@@ -188,7 +189,7 @@ export class StoreManageDialogComponent implements OnInit {
     this.itemRefundReason = "";
     this.type = "";
     this.amount = "";
-    this.reasonrefund = "";
+   
     this.storePIN = "";
     this.item = "";
     this.singleItemRefund = false;
@@ -196,13 +197,18 @@ export class StoreManageDialogComponent implements OnInit {
     this.storePinlengthMessage = false;
     this.storePinDisplay = false;
 }
+storePinString(data){
+  data=data.toString();
+  return data;
+ }
 refundType(type) {
   if (type == 'FULL') {
-      this.initateRefund = false;
+     /* this.initateRefund = false;
       this.fullRefund = true;
       this.partialRefund = false;
       this.itemRefund = false;
-      this.refundSummary = false;
+      this.refundSummary = false;*/
+      this.submitRefundRequest('FULL');
   }
   if (type == 'PARTIAL') {
       this.partialRefundAmount = "";
@@ -226,18 +232,59 @@ submitRefundRequest(type) {
       this.type = 'Full Refund'
       this.amount = this.orderDetail.total;
       this.amount = this.amount;
-      this.reasonrefund = (<HTMLInputElement>document.getElementById("reason")).value;
-      alert(this.amount+","+this.reasonrefund);
 
   }
   if (type == 'PARTIAL') {
       this.singleItemRefund = false;
       this.type = 'Partial  Refund'
-      this.amount = this.partialRefundAmount;
-      this.reasonrefund = (<HTMLInputElement>document.getElementById("partialRefundReason")).value;//this.partialRefundReason;
-      alert(this.amount+","+this.reasonrefund);
+      this.amount = this.partialRefundAmount;  
     }
  
+}
+finalRefund(){
+  var payload={
+    orderId:  this.orderDetail.orderId,
+    reason : this.reasonrefund, 
+    refundValue : this.amount.toString(), 
+    refundType: "order"
+}
+console.log(payload);
+this.finalLoading=true;
+var pin=this.cp.checkPin(this.data.id, this.storePIN).subscribe(
+  data => {
+    this.finalLoading=false;
+  
+      if (data.pinStatus == true) {
+          this.pinAttempt = 0;
+          pin.unsubscribe();
+          this.finalLoading=true;
+          this.api.cpRefund(payload);
+          this.api.getcpRefund()
+          .subscribe((x) => {
+          this.finalLoading=false;
+          if(x.message=='Refund Updated Successfully'){
+            $("#refundSuccess").modal("show");
+            $("#refund").modal("hide");
+          }
+          else{
+            $("#refundFailed").modal("show");
+            $("#refund").modal("hide");
+          }
+          })
+        }
+      else {
+          this.pinAttempt = this.pinAttempt + 1;
+          if (this.pinAttempt > 3) {
+
+          }
+      }
+  },
+  error => {
+      this.loading = false;
+      $("#refundFailed").modal("show");
+      $("#refund").modal("hide");
+      console.log(error);
+  });
 }
 
 refundClick() {
@@ -285,7 +332,7 @@ refundClick() {
         searchBy:"txtorder",
         fromDate:from,
         toDate:to,
-        restNum:"+13037071100"//this.data.id
+        restNum:this.data.id
       }
       this.loading = true;
       this.api.cpcontrolData(data);
