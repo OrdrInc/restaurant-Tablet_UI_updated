@@ -1,0 +1,92 @@
+<div id="header">
+  <nav class="navbar pT15 pL25 pad-10 black-bg">
+    <span class="white-c f-23 bold lwSpace">{{ resturantName }} 
+    </span>
+  </nav>
+</div>
+<div class="flex-container text-center" *ngIf="loading">
+  <img src="https://i.gifer.com/embedded/download/8REG.gif" class="rounded img-fluid" alt="...">
+</div>
+<div *ngIf="!loading" class="text-center mB20">
+  <div *ngIf="!pinVerified">
+    <div class="modal-body col-sm-5 mT50" style="margin:auto">
+      <div *ngIf="pinAttempt >0 && pinAttempt <= 3" class="alert alert-danger" role="alert">
+          Wrong Pin. Attempts {{this.pinAttempt}} of 3.
+      </div>
+      <div *ngIf="pinAttempt >3" class="alert alert-danger" role="alert">
+          You have entered Wrong Pin 3 times. Call (415) 903-4020 for support.
+      </div>
+      <div *ngIf="storePinlengthMessage" class="alert alert-danger" role="alert">
+          Please enter a valid 4 Digit PIN
+      </div>
+      <div>
+
+          <strong>
+              <h5 class="bold f-23">Enter Your Store PIN (4-Digit) to Access Store:</h5>
+          </strong>
+          <div class="col-auto w70 pL0 margin-auto pT10">
+
+              <div class="input-group mb-2">
+
+                  <input style="height:45px" appAutoFocus maxlength="4" onKeyPress="if(this.value.length==4) return false;" type="tel" [(ngModel)]="storePIN"
+                      class="form-control" id="storepinn" placeholder="PIN">
+
+              </div>
+          </div>
+          <div class="">
+              <a  (click)="extendPin()"
+                  class="btn   mT30 f-20 bold bR8 pad-10 {{storePinString(storePIN).length==4?' btn-success':'disabled'}}">Submit</a>
+             
+          </div>
+      </div>
+  </div>
+  </div>
+  
+  <div *ngIf="pinVerified">
+    <div class="box  {{storedata.actionBtnArr[0].item=='Resume Store' ? 'bg-success':'maroon-bg'}} " (click)="textOrders()">
+      <p class="mT32">
+        <span *ngIf="storedata.actionBtnArr[0].item=='Resume Store'">Resume Text Orders</span>
+        <span *ngIf="storedata.actionBtnArr[0].item=='Pause Store'">Pause Text Orders</span>
+      </p>
+    </div>
+    <div (click)="refund()" class="box bg-grey">
+      <p class="mT32">Refund</p>
+    </div>
+   <!-- <div (click)="storeOperation()" style="background-color:#17a2b8!important; " class="box bg-dark">
+      <p class="mT32">Store Operation</p>
+    </div>-->
+<div (click)="items()" style="background-color:#ffc107!important;border:none;color: black;" class="box bg-primary">
+  <p class="mT32">Items Out of Stock Manager</p>
+</div>
+<div class="clearfix"></div>
+<div class="box  {{storedata.actionBtnArr[1].item=='Resume Delivery' ? 'bg-success':'maroon-bg'}}" (click)="deliveryOrders()">
+  <p class="mT32">
+    <span *ngIf="storedata.actionBtnArr[1].item=='Resume Delivery'">Resume Delivery Orders</span>
+    <span *ngIf="storedata.actionBtnArr[1].item=='Pause Delivery'">Pause Delivery Orders</span>
+  </p>
+</div>
+<div (click)="testStore()"style="background-color:white!important;color:black;border:1px solid black; " class="box bg-primary">
+  <p class="mT32">Test Store</p>
+</div>
+<!--<div (click)="storeHours()" style="background-color:#17a2b8!important; " class="box yellow-bg">
+  <p class="mT32">Store Hours</p>
+</div>-->
+<div (click)="modifiers()" style="background-color:#ffc107!important;border:none;color: black;" class="box bg-secondary">
+  <p class="mT32">Modifiers  Out of Stock Manager</p>
+</div>
+
+
+<div class="clearfix"></div>
+
+
+
+
+
+<div class="clearfix"></div>
+
+
+</div>
+</div>
+<app-footer></app-footer>
+<app-text-popup ></app-text-popup>
+<app-delivery-popup></app-delivery-popup>

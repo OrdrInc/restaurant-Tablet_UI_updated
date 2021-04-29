@@ -93,7 +93,7 @@ export class TabletRestComponent implements OnInit {
     itemRefundReason: any;
     type: any;
     amount: any;
-    reasonrefund: any;
+    reasonrefund: any='Managers decision';
     refundSummary: boolean = false;
     storePIN: any = "";
     item: any;
@@ -203,7 +203,6 @@ export class TabletRestComponent implements OnInit {
         this.itemRefundReason = "";
         this.type = "";
         this.amount = "";
-        this.reasonrefund = "";
         this.storePIN = "";
         this.item = "";
         this.singleItemRefund = false;
@@ -224,11 +223,12 @@ export class TabletRestComponent implements OnInit {
 
     refundType(type) {
         if (type == 'FULL') {
-            this.initateRefund = false;
+           /* this.initateRefund = false;
             this.fullRefund = true;
             this.partialRefund = false;
             this.itemRefund = false;
-            this.refundSummary = false;
+            this.refundSummary = false;*/
+            this.submitRefundRequest(type);
         }
         if (type == 'PARTIAL') {
             this.partialRefundAmount = "";
@@ -266,20 +266,20 @@ export class TabletRestComponent implements OnInit {
             this.type = 'Full Refund'
             this.amount = this.orderDetail.paidDollarValue.paidTotal;
             this.amount = this.amount;
-            this.reasonrefund = (<HTMLInputElement>document.getElementById("reason")).value;
+           
 
         }
         if (type == 'PARTIAL') {
             this.singleItemRefund = false;
             this.type = 'Partial  Refund'
             this.amount = this.partialRefundAmount;
-            this.reasonrefund = (<HTMLInputElement>document.getElementById("partialRefundReason")).value;//this.partialRefundReason;
+           
         }
         if (type == 'ITEM') {
             this.singleItemRefund = true;
             this.type = 'Item  Refund';
             this.item = (<HTMLInputElement>document.getElementById("item")).value;
-            this.reasonrefund = (<HTMLInputElement>document.getElementById("itemRefundReason")).value;//this.itemRefundReason;
+           
 
             for (var i = 0; i < this.orderDetail.items.length; i++) {
                 if (this.orderDetail.items[i].item.name == this.item) {
@@ -289,6 +289,7 @@ export class TabletRestComponent implements OnInit {
                 }
             }
             this.amount = this.amount * (100 - coupon) / 100;
+            this.amount=this.amount.toFixed(2);
         }
     }
 
