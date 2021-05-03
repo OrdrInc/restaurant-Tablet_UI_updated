@@ -55,12 +55,12 @@
         >
           <i
             *ngIf="curPage == 'fb'"
-            class="fa fa-caret-up f-22 caret-disp"
+            class="fa fa-caret-up f-22 caret-disp" style="left:5%!important"
             aria-hidden="true"
           ></i>
           <span *ngIf="curPage != 'fb'">&nbsp;&nbsp;</span> 
           <i *ngIf="!service.isFeedback" class="fa fa-lock f-22" aria-hidden="true"></i>
-          FEEDBACK&nbsp;<span
+          REVIEW&nbsp;<span
             *ngIf="service.feedbackBadgeCount > 0"
             class="badge badge-new badge-light br8 f-16"
             >{{ service.feedbackBadgeCount }}</span

@@ -90,7 +90,10 @@
 </div> -->
 <div *ngIf="!service.isCurbSide">
   <div style="margin-top:150px" class="text-center bold f-25">
-    <p>{{service.isCurbsideLockedMessage}}</p>
+    <p style="font-size: 20px;
+    line-height: 45px;
+    letter-spacing: 0.75px;
+    word-spacing: 0.5px;" [innerHTML]="service.isCurbsideLockedMessage"></p>
   </div>
   </div>
 <div style="height: 150px;">&nbsp;</div>

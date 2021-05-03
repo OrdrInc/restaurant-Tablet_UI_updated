@@ -14,7 +14,7 @@
 </div>
 <div *ngIf="!loading" >
   <div class="text-center mT50 " *ngIf="displayData.length==0">
-    <img width="30%" src="https://terisas.ac.in/retopia/img/announcement.gif">
+    <img width="30%" src="https://cdn.dribbble.com/users/870130/screenshots/2629623/bocina.gif">
   </div>
   <table *ngIf="displayData.length!=0" class="table item-center" align="center">
     <tbody style="color: black" class="">
@@ -76,7 +76,10 @@
 </div>
 <div *ngIf="!service.isBroadcast">
 <div style="margin-top:150px" class="text-center bold f-25">
-  <p>{{service.isBroadcastLockedMessage}}</p>
+  <p  style="font-size: 20px;
+  line-height: 45px;
+  letter-spacing: 0.75px;
+  word-spacing: 0.5px;" [innerHTML]="service.isBroadcastLockedMessage"></p>
 </div>
 </div>
 <app-footer></app-footer>

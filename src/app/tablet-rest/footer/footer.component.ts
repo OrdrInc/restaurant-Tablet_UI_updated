@@ -22,6 +22,9 @@ export class FooterComponent implements OnInit {
   constructor(private router: Router,private service: AppService,private api:NewService) {}
 
   ngOnInit() {
+    this.service.isBroadcastLockedMessage="";
+    this.service.isFeedbackLockedMessage="";
+    this.service.isCurbsideLockedMessage="";
     var str = window.location.pathname;
     this.res = str.split("/");
     this.curPage = this.res[1];
@@ -32,11 +35,33 @@ export class FooterComponent implements OnInit {
      }
     
     this.api.cpFetchCounters(payload);
-    this.api.getcpFetchCounters().subscribe((data) => {
+    var counter=this.api.getcpFetchCounters().subscribe((data) => {
      this.service.broadcastBadgeCount=parseInt(data.bcCounter);
      this.service.curbsideBadgeCount=parseInt(data.csCounter);
      this.service.feedbackBadgeCount=parseInt(data.fbCounter);
      this.service.textPOSBadgeCount=parseInt(data.textCounter);
+
+     counter.unsubscribe();
+    
+     this.service.getInitalDetails(this.res[2]).subscribe(
+      dataNew => {
+        this.service.isBroadcast=dataNew.isBroadcast;
+        this.service.isCurbSide=dataNew.isCurbside;
+        this.service.isFeedback=dataNew.isFeedback;
+        if(this.service.isBroadcast==false){
+          this.service.isBroadcastLockedMessage="Email info@ordrai.com to add Broadcast module."
+        }
+        if(this.service.isFeedback==false && this.service.isCurbSide==false){
+          this.service.isFeedbackLockedMessage="Add the Reviews  module for just $20/month.<br> Email info@ordrai.com for more information."
+          this.service.isCurbsideLockedMessage="Add the  Curbside module for just $20/month.<br> Email info@ordrai.com for more information."
+       
+        }
+        else{
+          this.service.isFeedbackLockedMessage="Add the Reviews  module for just $20/month.<br> Email info@ordrai.com for more information."
+          this.service.isCurbsideLockedMessage="Add the  Curbside module for just $20/month.<br> Email info@ordrai.com for more information."
+        }
+      })
+     
     })
     this.pusher = new Pusher("8892259dee5062541bfb", {
       cluster: "us2",
