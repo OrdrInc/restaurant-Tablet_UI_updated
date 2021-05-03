@@ -3,7 +3,7 @@
     <span class="white-c f-23 bold lwSpace">{{ resturantName }} 
     </span>
     <span class="fRight mR20 bold lwSpace white-c f-23"
-    > <i class="fa fa-refresh mR10 " (click)="refresh()" style="font-size:30px" aria-hidden="true"></i> Today's Feedback
+    > <i class="fa fa-refresh mR10 " (click)="refresh()" style="font-size:30px" aria-hidden="true"></i> Today's Review
     <span style="font-size: 25px;" class="badge badge-danger bR20">{{ feedbackcount }}</span></span
   >
   </nav>
@@ -78,7 +78,10 @@
 </div>
 <div *ngIf="!service.isFeedback">
   <div style="margin-top:150px" class="text-center bold f-25">
-    <p>{{service.isFeedbackLockedMessage}}</p>
+    <p style="font-size: 20px;
+    line-height: 45px;
+    letter-spacing: 0.75px;
+    word-spacing: 0.5px;" [innerHTML]="service.isFeedbackLockedMessage"></p>
   </div>
   </div>
 <app-footer></app-footer>
@@ -90,11 +93,12 @@
     <div class="modal-content text-center">
       
       <div style="background-color: black!important;" class="modal-header d-flex justify-content-center">
-        <p style="font-size: 25px!important;" class="heading mod-head">FEEDBACK RESPONSE</p>
+        <p style="font-size: 25px!important;" class="heading mod-head">REVIEW RESPONSE</p>
       </div>
       <div style="height:auto" class="text-center pT50">
-        <a (click)="selectedResponse='btn1'" style="width: 90%; border-radius: 8px;color: black; letter-spacing:0.75px; word-spacing: 1px;" class="btn {{selectedResponse==''?'btn-warning black-c':''}} {{selectedResponse=='btn1'?'btn-warning black-c':''}} {{(selectedResponse!='btn1' && selectedResponse!='')?'btn-grey grey-c':''}}  f-18 mR30 mL30 mB40 ">Thanks for the feedback! We really appreciate your kind words!</a><br>
-        <a (click)="selectedResponse='btn2'" style="width: 90%; border-radius: 8px;color:black;letter-spacing:0.75px; word-spacing: 1px;" class="btn {{selectedResponse==''?'btn-warning black-c':''}} {{selectedResponse=='btn2'?'btn-warning black-c':''}} {{(selectedResponse!='btn2' && selectedResponse!='')?'btn-grey grey-c':''}}  f-18 mR30 mL30 mB40 m20 ">Thanks for the feedback. We take your comments seriously and will be reviewing this with our management team asap. Thank you.</a>
+        <a (click)="selectedResponse='btn1'" style="width: 90%; border-radius: 8px;color: black; letter-spacing:0.75px; word-spacing: 1px;" class="btn {{selectedResponse==''?'btn-warning black-c':''}} {{selectedResponse=='btn1'?'btn-warning black-c':''}} {{(selectedResponse!='btn1' && selectedResponse!='')?'btn-grey grey-c':''}}  f-18 mR30 mL30 mB40 ">Thanks for the review! We really appreciate your kind words!</a><br>
+        <a (click)="selectedResponse='btn2'" style="width: 90%; border-radius: 8px;color:black;letter-spacing:0.75px; word-spacing: 1px;" class="btn {{selectedResponse==''?'btn-warning black-c':''}} {{selectedResponse=='btn2'?'btn-warning black-c':''}} {{(selectedResponse!='btn2' && selectedResponse!='')?'btn-grey grey-c':''}}  f-18 mR30 mL30 mB40 m20 ">Thanks for the         <a (click)="selectedResponse='btn1'" style="width: 90%; border-radius: 8px;color: black; letter-spacing:0.75px; word-spacing: 1px;" class="btn {{selectedResponse==''?'btn-warning black-c':''}} {{selectedResponse=='btn1'?'btn-warning black-c':''}} {{(selectedResponse!='btn1' && selectedResponse!='')?'btn-grey grey-c':''}}  f-18 mR30 mL30 mB40 ">Thanks for the review! We really appreciate your kind words!</a><br>
+        . We take your comments seriously and will be reviewing this with our management team asap. Thank you.</a>
 
       </div>
       <div style="height:auto" class="modal-footer flex-center pT0">

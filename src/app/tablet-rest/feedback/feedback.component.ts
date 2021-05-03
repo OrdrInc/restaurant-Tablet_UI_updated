@@ -10,7 +10,11 @@ declare var $: any;
 })
 export class FeedbackComponent implements OnInit {
   @ViewChild("audioOption") audioPlayerRef: ElementRef;
-  constructor(private service: AppService, private api: NewService) {}
+  constructor(public service: AppService, private api: NewService) {
+    this.service.isBroadcastLockedMessage="";
+    this.service.isFeedbackLockedMessage="";
+    this.service.isCurbsideLockedMessage="";
+  }
   id;
   resturantName;
   feedbackcount = 0;
@@ -24,6 +28,7 @@ export class FeedbackComponent implements OnInit {
   selectedResponse='';
   text='';
   ngOnInit() {
+   
     var str = window.location.href;
     var res = str.split("fb/");
     this.id = res[1];
@@ -33,12 +38,14 @@ export class FeedbackComponent implements OnInit {
       this.resturantName = data[0].friendlyName;
       this.restId = data[0].restId;
       //this.service.isFeedback=data[0].isFeedback;
+     
       this.getAlldata(data[0].restId, data[0].storeDate);
       (error) => {
         this.loading = false;
         console.log(error);
       };
     });
+    
     this.pusher = new Pusher("8892259dee5062541bfb", {
       cluster: "us2",
       forceTLS: true,

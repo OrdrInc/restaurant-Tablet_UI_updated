@@ -14,10 +14,14 @@ import { Howl, Howler } from "howler";
 export class BroadcastComponent implements OnInit {
   @ViewChild("audioOption") audioPlayerRef: ElementRef;
   constructor(
-    private service: AppService,
+    public service: AppService,
     private api: NewService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.service.isBroadcastLockedMessage="";
+    this.service.isFeedbackLockedMessage="";
+    this.service.isCurbsideLockedMessage="";
+  }
   id;
   resturantName;
   broadcastcount = 0;

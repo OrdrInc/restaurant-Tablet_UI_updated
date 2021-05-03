@@ -27,15 +27,12 @@ export class AppService {
   broadcastBadgeCount = 0;
   curbsideBadgeCount = 0;
   textPOSBadgeCount = 0;
-  isCurbSide = false;
-  isFeedback = false;
-  isBroadcast = false;
-  isBroadcastLockedMessage =
-    "This feature is Locked. For subscription please write to info@ordrai.com.";
-  isFeedbackLockedMessage =
-    "This feature is Locked. For subscription please write to info@ordrai.com.";
-  isCurbsideLockedMessage =
-    "This feature is Locked. For subscription please write to info@ordrai.com.";
+  isCurbSide = true;
+  isFeedback = true;
+  isBroadcast = true;
+  isBroadcastLockedMessage ="";
+  isFeedbackLockedMessage ="";
+  isCurbsideLockedMessage ="";
 
   constructor(private http: Http, private options: RequestOptions) {
     this.options = new RequestOptions({
