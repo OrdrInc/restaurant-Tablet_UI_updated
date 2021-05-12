@@ -63,7 +63,7 @@
     "recordrtc": "^5.5.4",
     "rxjs": "6.0.0",
     "rxjs-compat": "6.0.0",
-    "swiper": "^4.4.6",
+    "swiper": "^6.5.1",
     "typescript": "^2.9.2",
     "underscore": "^1.11.0",
     "web-animations-js": "^2.3.1",
