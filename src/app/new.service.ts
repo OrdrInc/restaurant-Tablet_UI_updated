@@ -31,8 +31,13 @@ export class NewService {
  private feedbackRefreshData= new Subject<any>();
  private fetchCountersData= new Subject<any>();
  private refundData= new Subject<any>();
+ private feedbackHistoryData=new Subject<any>();
+ private feedbackCSVData= new Subject<any>();
   constructor(private http: HttpClient) {
 
+  }
+  getfeedbackHistory() {
+    return this.feedbackHistoryData.asObservable();
   }
   getManageDetails() {
     return this.manageDetails.asObservable();
@@ -75,6 +80,33 @@ export class NewService {
   }
   getcpRefund() {
     return this.refundData.asObservable();
+  }
+  getfeedbackCSV() {
+    return this.feedbackCSVData.asObservable();
+  }
+  feedbackCSV(fromDate, toDate, restId, storecode ,category) {
+    if(category=='all'){
+    var localAddress = this.address+'feedback/download/store?fromDate='+fromDate+'&toDate='+toDate+'&restId='+restId+'&storeCode='+storecode;
+    }
+    else if(category!='all'){
+      var localAddress = this.address+'feedback/download/store?fromDate='+fromDate+'&toDate='+toDate+'&restId='+restId+'&storeCode='+storecode+'&category='+category
+      }
+    this.http.get<any>(localAddress)
+      .subscribe((data) => {
+        this.feedbackCSVData.next(data);
+       // console.log(data);
+      },
+        (err: HttpErrorResponse) => {
+          window.open(localAddress, "_blank");
+        })
+  }
+  feedbackHistory(data) {
+    var pack = JSON.stringify(data);
+    const localAddress = `${this.address}feedback/detailReport/store`;
+    this.http.post<any>(localAddress, pack, httpOptions)
+      .subscribe((data) => {
+        this.feedbackHistoryData.next(data);
+      });
   }
   cpRefund(data) {
     var refund= JSON.stringify(data);

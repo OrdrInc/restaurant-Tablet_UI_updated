@@ -4,7 +4,9 @@
     </span>
     <span class="fRight mR20 bold lwSpace white-c f-23"
     > <i class="fa fa-refresh mR10 " (click)="refresh()" style="font-size:30px" aria-hidden="true"></i> Today's Review
-    <span style="font-size: 25px;" class="badge badge-danger bR20">{{ feedbackcount }}</span></span
+    <span style="font-size: 25px;" class="badge badge-danger bR20">{{ feedbackcount }}</span>
+    <span (click)="feedbackHistory()" class="mL20">Review History</span>
+    </span
   >
   </nav>
 </div>

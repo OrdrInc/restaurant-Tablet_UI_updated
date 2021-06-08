@@ -60,9 +60,12 @@ import { TextPopupComponent } from './tablet-rest/store-manage/text-popup/text-p
 import { DeliveryPopupComponent } from './tablet-rest/store-manage/delivery-popup/delivery-popup.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DetailsPopupComponent } from './tablet-rest/broadcast/details-popup/details-popup.component';
+import {FeedbackHistoryComponent} from './tablet-rest/feedback/feedback-history/feedback-history.component'
+import { PhoneFormat, PhoneFormatWithPlus, StoreIdFormat } from './tablet-rest/feedback/feedback-history/phone-format'
 @NgModule({
   declarations: [
     AppComponent,
+    PhoneFormat,
     LongPressDirective,
     HeaderComponent,
     StoreManageDialogComponent,
@@ -97,6 +100,7 @@ import { DetailsPopupComponent } from './tablet-rest/broadcast/details-popup/det
     TextPopupComponent,
     DeliveryPopupComponent,
     DetailsPopupComponent,
+    FeedbackHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -133,6 +137,6 @@ import { DetailsPopupComponent } from './tablet-rest/broadcast/details-popup/det
   ],
   providers: [AppService, NewService,MatDatepickerModule],
   bootstrap: [AppComponent],
-  entryComponents: [StoreManageDialogComponent,DetailsPopupComponent],
+  entryComponents: [StoreManageDialogComponent,DetailsPopupComponent,FeedbackHistoryComponent],
 })
 export class AppModule {}
