@@ -3,8 +3,13 @@
     <span class="white-c f-23 bold lwSpace">{{ resturantName }} 
     </span>
     <span class="fRight mR20 bold lwSpace white-c f-23"
-    > <i class="fa fa-refresh mR10 " (click)="refresh()" style="font-size:30px" aria-hidden="true"></i> Today's Review
-    <span style="font-size: 25px;" class="badge badge-danger bR20">{{ feedbackcount }}</span></span
+    > <i class="fa fa-refresh mR10 " (click)="refresh()" style="font-size:30px" aria-hidden="true"></i> 
+    <span (click)="feedbackHistory()" class="mL20 btn btn-warning review">Past Reviews </span>
+    Today's Review
+    
+    <span style="font-size: 25px;" class="badge badge-danger bR20">{{ feedbackcount }}</span>
+    
+    </span
   >
   </nav>
 </div>

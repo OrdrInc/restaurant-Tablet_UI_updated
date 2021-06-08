@@ -4,6 +4,8 @@ import { NewService } from "./../../new.service";
 import { MatDialog } from "@angular/material/dialog";
 import { StoreManageDialogComponent } from "./store-manage-dialog/store-manage-dialog.component";
 import { unescapeHtml } from "@angular/platform-browser/src/browser/transfer_state";
+
+import {FeedbackHistoryComponent} from './../feedback/feedback-history/feedback-history.component'
 declare var $: any;
 @Component({
   selector: "app-store-manage",
@@ -18,6 +20,7 @@ export class StoreManageComponent implements OnInit {
   storePinlengthMessage = false;
   storePIN = "";
   pinAttempt = 0;
+  restId=''
   sid = "";
   storedata;
   textOrderVariable = "";
@@ -39,6 +42,22 @@ export class StoreManageComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
+  feedbackHistory(){
+    var payload={
+      restName: this.resturantName,
+      restId:this.restId
+    }
+    this.dialog.closeAll();
+    const dialogRef = this.dialog.open(FeedbackHistoryComponent, {
+      width: "99%",
+      height: "100%",
+      maxWidth: "unset",
+      data:payload
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      // //console.log('The dialog was closed');
+    });
+  }
   ngOnInit() {
     var str = window.location.href;
     var res = str.split("manage/");
@@ -47,6 +66,7 @@ export class StoreManageComponent implements OnInit {
     this.service.getrestInfo(this.id).subscribe((data) => {
       this.loading = false;
       this.resturantName = data[0].friendlyName;
+      this.restId=data[0].restId;
       this.api.resturantName = this.resturantName;
       let name = this.resturantName;
       let sid = name.split(" ");

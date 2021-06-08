@@ -673,6 +673,10 @@ MIT
 
 @angular/material/form-field
 
+@angular/material/select
+
+@angular/material/core
+
 @angular/material-moment-adapter
 MIT
 The MIT License

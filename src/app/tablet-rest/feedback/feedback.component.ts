@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { AppService } from "./../../app.service";
 import { NewService } from "./../../new.service";
 import Pusher from "pusher-js";
+import { MatDialog } from "@angular/material/dialog";
+import {FeedbackHistoryComponent} from './feedback-history/feedback-history.component'
+import { from } from "rxjs";
 declare var $: any;
 @Component({
   selector: "app-feedback",
@@ -10,7 +13,7 @@ declare var $: any;
 })
 export class FeedbackComponent implements OnInit {
   @ViewChild("audioOption") audioPlayerRef: ElementRef;
-  constructor(public service: AppService, private api: NewService) {
+  constructor(public service: AppService, private api: NewService, public dialog: MatDialog) {
     this.service.isBroadcastLockedMessage="";
     this.service.isFeedbackLockedMessage="";
     this.service.isCurbsideLockedMessage="";
@@ -83,6 +86,22 @@ export class FeedbackComponent implements OnInit {
     pusherData["border"] = "black-back";
     console.log(pusherData);
     this.push(pusherData);
+  }
+  feedbackHistory(){
+    var payload={
+      restName: this.resturantName,
+      restId:this.restId
+    }
+    this.dialog.closeAll();
+    const dialogRef = this.dialog.open(FeedbackHistoryComponent, {
+      width: "99%",
+      height: "100%",
+      maxWidth: "unset",
+      data:payload
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      // //console.log('The dialog was closed');
+    });
   }
   push(data) {
     this.displayData.unshift(data);
