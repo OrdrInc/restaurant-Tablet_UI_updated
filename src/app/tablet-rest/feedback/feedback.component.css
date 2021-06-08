@@ -8,6 +8,18 @@
 .f-25{
    font-size: 2vw!important; 
 }
+.review{
+    color: black;
+    font-size: 17px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 8px;
+    /* font-family: cursive; */
+    /* font-weight: normal; */
+    font-weight: bold;
+}
 .f-20{
    font-size: 1.5vw!important;
 }

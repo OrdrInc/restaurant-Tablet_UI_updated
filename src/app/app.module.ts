@@ -61,7 +61,7 @@ import { DeliveryPopupComponent } from './tablet-rest/store-manage/delivery-popu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DetailsPopupComponent } from './tablet-rest/broadcast/details-popup/details-popup.component';
 import {FeedbackHistoryComponent} from './tablet-rest/feedback/feedback-history/feedback-history.component'
-import { PhoneFormat, PhoneFormatWithPlus, StoreIdFormat } from './tablet-rest/feedback/feedback-history/phone-format'
+import { PhoneFormat } from './tablet-rest/feedback/feedback-history/phone-format'
 @NgModule({
   declarations: [
     AppComponent,
